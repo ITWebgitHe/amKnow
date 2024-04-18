@@ -4,7 +4,7 @@
     <el-menu
       :default-active="$route.path.substring(1)"
       id="elmenu"
-      background-color="#eef1f6"
+      background-color="#7ec4c9"
       text-color="#053343"
       active-text-color="#409EFF"
       unique-opened
@@ -142,5 +142,18 @@ nav {
 }
 .el-menu-item:hover {
   background-color: #d1dbe5 !important;
+}
+.el-submenu__title {
+    font-size: 16px;
+    background: #fff !important;
+}
+.el-menu-item {
+    font-size: 16px;
+     background: #fff !important;
+}
+
+/* 为 el-menu 的激活状态的项设置背景色 */
+.el-menu-item.is-active {
+    background-color: #d1dbe5 !important; /* 替换为你想要的颜色 */
 }
 </style>

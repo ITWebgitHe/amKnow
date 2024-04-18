@@ -40,7 +40,7 @@ import store from "@/vuex/store";
 export default {
   data() {
     return {
-      systemName: "amKnow",
+      systemName: "毕业生",
       image: ""
     };
   },
@@ -70,10 +70,11 @@ export default {
 </script>
 <style>
 .header {
-  background-color: #f6db63;
+  background-color: #7ec4c9;
   color: #053343;
 }
 .logo {
+    color:#e67e22;
   height: 100%;
   text-align: center;
   font-size: 24px;

@@ -60,6 +60,8 @@ export default {
       this.state = !this.state;
     },
     handleLogin() {
+        this.$router.push({ path: "/automobileInfMng" });
+        return
       this.$refs.formData.validate(valid => {
         if (valid) {
           let that = this;
