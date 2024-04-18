@@ -1,7 +1,7 @@
 <template>
   <div class="login-container">
     <el-form :model="formData" :rules="formRules" ref="formData">
-      <span class="title">amKnow</span>
+      <span class="title">毕业生管理系统</span>
       <el-form-item prop="username">
         <el-input
           type="text"
