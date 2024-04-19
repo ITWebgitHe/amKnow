@@ -88,7 +88,7 @@
                 <el-col :span="24" style="margin-left:20px">
                 
                     <el-button type="primary" size="small" on="el-icon-search" v-show="getShow == 1" @click="searchAutomobile">确认提交</el-button>
-                    <el-button type="primary" size="small" icon="el-icon-search" v-show="getShow == 1" @click="searchAutomobile">还原至现有填报</el-button>
+                    <el-button  size="small" v-show="getShow == 1" @click="searchAutomobile">还原至现有填报</el-button>
                
             </el-col>
             </el-row>

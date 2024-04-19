@@ -9,10 +9,12 @@
     </el-col>
     <el-col :span="4">
       <div class="collapse-tool" @click="$store.state.isActive && $store.commit('collapse')">
-        <i :class="getCollapse?'icon iconfont icon-right':'icon iconfont icon-left'"></i>
+        <i :class="getCollapse?'el-icon-s-unfold':'el-icon-s-fold'" style="font-size:25px;color:#7f8c8d"></i>
+        <!-- <i class="icon el-icon-s-unfold"></i> -->
       </div>
     </el-col>
     <el-col :span="6" class="user">
+        <div>{{userInfo.name}}</div>
       <el-dropdown>
         <span class="el-dropdown-link user-span">
           <img :src="image" class="head-portrait">
@@ -41,12 +43,14 @@ export default {
   data() {
     return {
       systemName: "毕业生",
-      image: ""
+      image: require("../../../static/image/male.jpg"),
+      userInfo:{}
     };
   },
   store,
   mounted() {
-    this.image = JSON.parse(sessionStorage.getItem("userInf")).image;
+    this.userInfo = this.$store.state.userInfo
+    // this.image = JSON.parse(sessionStorage.getItem("userInf")).image;
   },
   computed: {
     getCollapse() {
@@ -98,6 +102,8 @@ export default {
   text-align: right;
   padding-right: 20px;
   float: right;
+  display: flex;
+  justify-content: end;
 }
 .user-span {
   cursor: pointer;
@@ -111,5 +117,8 @@ export default {
 }
 .icon-span {
   padding-left: 4px;
+}
+.el-dropdown {
+    width:88px
 }
 </style>
