@@ -16,7 +16,7 @@ export default new Vuex.Store({
     getters: {
     },
     mutations: {
-        collapse: function () {
+        collapse: function (state) {
             state.collapsed = !state.collapsed;
         },
         collapseToTrue: function () {

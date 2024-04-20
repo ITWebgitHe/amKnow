@@ -63,7 +63,7 @@ export default {
                     let that = this;
                     axios
                         .get(
-                            "https://www.easy-mock.com/mock/5c702a27d3044d1448586d67/amKnow/user"
+                            "http://10.8.0.216:9000/pic_lib/user/test"
                         )
                         .then(response => {
                             let userInfs = response.data;

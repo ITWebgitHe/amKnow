@@ -20,11 +20,11 @@
   </div>
 </template>
 <script>
-import store from "@/vuex/store";
+// import store from "@/vuex/store";
 export default {
   name: "Main",
   props: ["navMenus"],
-  store,
+//   store,
   computed: {
     getCollapse() {
       return this.$store.state.collapsed;
