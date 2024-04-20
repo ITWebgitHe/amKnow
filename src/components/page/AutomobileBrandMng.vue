@@ -171,11 +171,11 @@
   </div>
 </template>
 <script>
-import store from "@/vuex/store";
+// import store from "@/vuex/store";
 import axios from "axios";
 export default {
   name: "AutomobileBrandMng",
-  store,
+//   store,
   data() {
     return {
       loading: false,
