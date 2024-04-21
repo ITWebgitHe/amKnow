@@ -1,11 +1,11 @@
 <template>
     <div class="chart-container">
-        <h3>亲爱的摄图用户，填写真实资料，有助于好友找到你哦。</h3>
+        <!-- <h3>亲爱的用户，填写真实资料，有助于好友找到你哦。</h3> -->
         <div style="display:flex">
             <div>当前头像</div>
             <div style="width:100px;height:100px;margin-left:20px"><img src="../../assets/1.jpg" style="width:100%;height:100%;object-fit:cover;" /></div>
         </div>
-        <div style="margin-top:20px">
+        <div style="margin-top:10px">
             <el-form :model="ruleForm" :rules="rules" ref="formName" label-width="100px" class="demo-ruleForm">
                 <el-form-item label="密码" prop="password">
                     <el-input placeholder="请输入密码" v-model="ruleForm.password" style="width:384px" type="password"></el-input>
@@ -59,6 +59,9 @@
                         </el-form-item>
                     </el-col>
                 </el-form-item>
+                <el-form-item label="院系信息" prop="remark">
+                    <el-input v-model="ruleForm.remark" style="width:384px" type="textarea" :row="2"></el-input>
+                </el-form-item>
                 <el-form-item>
                     <el-button type="primary" @click="submitForm()">保存</el-button>
                     <el-button type="primary" @click="resetForm()">重置</el-button>
@@ -91,7 +94,9 @@ export default {
                 county: '',
                 provinceName: '',
                 cityName: '',
-                countyName: ''
+                countyName: '',
+                remark:''
+
             },
             rules: {
                 name: [
@@ -154,29 +159,30 @@ export default {
         },
         submitForm () {
             this.ruleForm.address = this.ruleForm.provinceName + this.ruleForm.cityName + this.ruleForm.countyName
+            this.ruleForm.addressCode = this.ruleForm.province + ',' + this.ruleForm.city + ',' + this.ruleForm.county
             this.$refs.formName.validate((valid) => {
                 if (valid) {
                     this.ruleForm.id = this.userInfo.id
                     let params = this.ruleForm
                     if (this.$route.query.isEdit) {
                         axios
-                        .post(
-                            "http://10.8.0.216:9000/pic_lib/user/update",
-                            params
+                            .post(
+                                "http://10.8.0.216:9000/pic_lib/user/update",
+                                params
 
-                        )
-                        .then(res => {
-                            console.log(res.data)
-                            if (res.data.code == '200') {
-                                this.$message.success('保存成功')
-                            }
-                        })
-                        .catch(error => {
-                            that.$message({
-                                message: "网络错误,请稍后再试",
-                                type: "error"
+                            )
+                            .then(res => {
+                                console.log(res.data)
+                                if (res.data.code == '200') {
+                                    this.$message.success('保存成功')
+                                }
+                            })
+                            .catch(error => {
+                                that.$message({
+                                    message: "网络错误,请稍后再试",
+                                    type: "error"
+                                });
                             });
-                        });
                     }
                     axios
                         .post(
@@ -220,6 +226,28 @@ export default {
                     console.log(res.data)
                     if (res.data.code == '200') {
                         this.userInfo = res.data.data
+                        this.ruleForm.password = this.userInfo.password
+                        this.ruleForm.name = this.userInfo.name
+                        this.ruleForm.idCard = this.userInfo.idCard
+                        this.ruleForm.sex = this.userInfo.sex
+                        this.ruleForm.age = this.userInfo.age
+                        this.ruleForm.province = this.userInfo.province
+                        this.ruleForm.stuNum = this.userInfo.stuNum
+                        this.ruleForm.phone = this.userInfo.phone
+                        for (let item of this.provinceList) {
+                            if (item.value == this.userInfo.province) {
+                                this.cityList = item.city
+                            }
+                            
+                        }
+                        for (let item of this.cityList) {
+                                if (item.value == this.userInfo.city) {
+                                    this.countyList = item.area
+                                }
+                            }
+                        this.ruleForm.city = this.userInfo.city
+                        this.ruleForm.county = this.userInfo.county
+                        this.ruleForm.remark = this.userInfo.remark
                     }
                 })
                 .catch(error => {

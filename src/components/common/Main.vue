@@ -92,6 +92,7 @@ export default {
   font-size: 16px;
 }
 .content-wrapper {
+    height: 100%;
   background-color: #fff;
   box-sizing: border-box;
 }
