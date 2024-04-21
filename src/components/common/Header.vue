@@ -23,7 +23,7 @@
                     </el-dropdown-item>
                     <el-dropdown-item>
                         <i class="icon iconfont icon-edit-square"></i>
-                        <span class="icon-span">修改资料</span>
+                        <span class="icon-span" @click="onEditInfo">修改资料</span>
                     </el-dropdown-item>
                     <el-dropdown-item divided @click.native="logout">
                         <i class="icon iconfont icon-poweroff"></i>
@@ -39,7 +39,7 @@
 export default {
     data () {
         return {
-            systemName: "毕业生",
+            systemName: "毕业生管理系统",
             image: require("../../../static/image/male.jpg"),
             userInfo: {},
             state: {}
@@ -69,10 +69,14 @@ export default {
                 .catch(() => { });
         },
         onCollpase () {
-
             // this.$store.state.isActive = true
             this.$store.commit('collapse')
 
+        },
+        onEditInfo() {
+            this.$router.push({ path: "/Dashboard",query:{
+                isedit:true
+            } })
         }
     }
 };

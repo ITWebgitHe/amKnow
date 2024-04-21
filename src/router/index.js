@@ -22,6 +22,14 @@ export default new Router({
             component: resolve => require(['@/components/common/Home'], resolve),
             children: [
                 {
+                    path: 'Index',
+                    name: 'Index',
+                    component: resolve => require(['@/components/page/Index.vue'], resolve),
+                    meta: {
+                        keepAlive: true // 需要缓存
+                    }
+                },
+                {
                     path: 'automobileInfMng',
                     name: 'AutomobileInfMng',
                     component: resolve => require(['@/components/page/AutomobileInfMng'], resolve),
@@ -86,16 +94,7 @@ export default new Router({
                     component: resolve => require(['@/admin-teacher/Information-Management.vue'], resolve),
                     meta: {
                         keepAlive: true, // 需要缓存
-                        title:'信息管理',
-                    }
-                },
-                {
-                    path: 'SurveyQuestionnaire',
-                    name: 'SurveyQuestionnaire',
-                    component: resolve => require(['@/admin-teacher/Survey-Questionnaire.vue'], resolve),
-                    meta: {
-                        keepAlive: true, // 需要缓存
-                        title:'调查问卷管理'
+                        title:'用户信息管理',
                     }
                 },
             ]

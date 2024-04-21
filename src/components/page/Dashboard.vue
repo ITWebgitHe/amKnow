@@ -6,83 +6,62 @@
             <div style="width:100px;height:100px;margin-left:20px"><img src="../../assets/1.jpg" style="width:100%;height:100%;object-fit:cover;" /></div>
         </div>
         <div style="margin-top:20px">
-            <el-form :model="ruleForm" :rules="rules" ref="ruleForm" label-width="100px" class="demo-ruleForm">
-                <el-form-item label="密码" prop="region">
+            <el-form :model="ruleForm" :rules="rules" ref="formName" label-width="100px" class="demo-ruleForm">
+                <el-form-item label="密码" prop="password">
                     <el-input placeholder="请输入密码" v-model="ruleForm.password" style="width:384px" type="password"></el-input>
                 </el-form-item>
-                <el-form-item label="昵称" prop="name">
+                <el-form-item label="真实姓名" prop="name">
                     <el-input v-model="ruleForm.name" style="width:384px"></el-input>
                 </el-form-item>
-                <el-form-item label="真实姓名" prop="region">
-                    <el-input v-model="ruleForm.name" style="width:384px"></el-input>
+                <el-form-item label="身份证号" prop="idCard">
+                    <el-input v-model="ruleForm.idCard" style="width:384px"></el-input>
                 </el-form-item>
-                <el-form-item label="性别" prop="resource">
-                    <el-radio-group v-model="ruleForm.resource">
+                <el-form-item label="年龄" prop="age">
+                    <!-- <el-input v-model="ruleForm.age" ></el-input> -->
+                    <el-input-number v-model="ruleForm.age" controls-position="right" :min="1" :max="100" style="width:384px"></el-input-number>
+                </el-form-item>
+
+                <el-form-item label="学生证号" prop="stuNum">
+                    <el-input v-model="ruleForm.stuNum" style="width:384px"></el-input>
+                </el-form-item>
+                <el-form-item label="手机号" prop="phone">
+                    <el-input v-model="ruleForm.phone" style="width:384px"></el-input>
+                </el-form-item>
+                <el-form-item label="性别" prop="sex">
+                    <el-radio-group v-model="ruleForm.sex">
                         <el-radio label="男"></el-radio>
                         <el-radio label="女"></el-radio>
                     </el-radio-group>
                 </el-form-item>
-                <el-form-item label="生日" required>
-                    <el-col :span="11">
-                        <el-form-item prop="date1">
-                            <el-date-picker v-model="ruleForm.date1" type="date" placeholder="选择日期" style="width: 100%;">
-                            </el-date-picker>
-                        </el-form-item>
-                    </el-col>
-
-                </el-form-item>
-                <el-form-item label="属性地" prop="delivery">
-                    <el-col :span="6">
-                        <el-form-item prop="date2">
-                            <el-select v-model="date2" placeholder="请选择" style="width:100%">
-                                <el-option v-for="item in options" :key="item.value" :label="item.label" :value="item.value">
-                                </el-option>
-                            </el-select>
-                        </el-form-item>
-                    </el-col>
-                    <el-col :span="4" style="margin-left:10px">
-                        <el-form-item prop="date2">
-                            <el-select v-model="date2" placeholder="请选择">
-                                <el-option v-for="item in options" :key="item.value" :label="item.label" :value="item.value">
-                                </el-option>
-                            </el-select>
-                        </el-form-item>
-                    </el-col>
-                    <el-col :span="4" style="margin-left:10px">
-                        <el-form-item prop="date2">
-                            <el-select v-model="date2" placeholder="请选择">
-                                <el-option v-for="item in options" :key="item.value" :label="item.label" :value="item.value">
-                                </el-option>
-                            </el-select>
-                        </el-form-item>
-                    </el-col>
-                </el-form-item>
-                <el-form-item label="地址" prop="delivery">
+                <el-form-item label="现居住地" prop="delivery">
                     <el-col :span="6">
                         <el-form-item prop="province">
-                            <el-select v-model="ruleForm.province" placeholder="请选择">
-                                <el-option v-for="(item,index) in provinceList" :label="item.label" :value="item.value" :key="item.value" @click.native="bindProvinceChange(index)"></el-option>
+                            <el-select v-model="ruleForm.province" placeholder="请选择" style="width:100%">
+                                <el-option v-for="(item,index) in provinceList" :key="item.value" :label="item.label" :value="item.value" @click.native="bindProvinceChange(index)">
+                                </el-option>
                             </el-select>
                         </el-form-item>
                     </el-col>
-                    <el-col :span="4" style="margin-left:10px">
+                    <el-col :span="6" style="margin-left:10px">
                         <el-form-item prop="city">
-                            <el-select v-model="ruleForm.city" placeholder="请选择">
-                                <el-option v-for="(item,index) in cityList" :label="item.label" :value="item.value" @click.native="bindCityChange(index)" :key="index"></el-option>
+                            <el-select v-model="ruleForm.city" placeholder="请选择" style="width:100%">
+                                <el-option v-for="(item,index) in cityList" :key="item.value" :label="item.label" :value="item.value" @click.native="bindCityChange(index)">
+                                </el-option>
                             </el-select>
                         </el-form-item>
                     </el-col>
-                    <el-col :span="4" style="margin-left:10px">
+                    <el-col :span="6" style="margin-left:10px">
                         <el-form-item prop="county">
-                            <el-select v-model="ruleForm.county" placeholder="请选择">
-                                <el-option v-for="(item,index) in countyList" :label="item.label" :value="item.value" :key="index"></el-option>
+                            <el-select v-model="ruleForm.county" placeholder="请选择" style="width:100%">
+                                <el-option v-for="item in countyList" :key="item.value" :label="item.label" :value="item.value" @click.native="bindCountyChange(item.label)">
+                                </el-option>
                             </el-select>
                         </el-form-item>
                     </el-col>
                 </el-form-item>
                 <el-form-item>
-                    <el-button type="primary" @click="submitForm('ruleForm')">保存</el-button>
-                    <el-button @click="resetForm('ruleForm')">返回</el-button>
+                    <el-button type="primary" @click="submitForm()">保存</el-button>
+                    <el-button type="primary" @click="resetForm()">重置</el-button>
                 </el-form-item>
             </el-form>
 
@@ -90,8 +69,7 @@
     </div>
 </template>
 <script>
-import echarts from "echarts";
-
+import axios from "axios";
 import products from '../common/cityData';
 export default {
     name: "Dashboard",
@@ -101,65 +79,53 @@ export default {
             chartPie: null,
             ruleForm: {
                 name: '',
-                region: '',
-                date1: '',
-                date2: '',
-                delivery: false,
-                type: [],
-                resource: '',
-                desc: '',
+                address: '',
+                idCard: '',
+                sex: '',
+                phone: '',
+                age: '',
+                stuNum: '',
                 password: '',
                 city: '',
                 province: '',
-                county: ''
+                county: '',
+                provinceName: '',
+                cityName: '',
+                countyName: ''
             },
             rules: {
                 name: [
                     { required: true, message: '请输入活动名称', trigger: 'blur' },
                     { min: 3, max: 5, message: '长度在 3 到 5 个字符', trigger: 'blur' }
                 ],
-                region: [
-                    { required: true, message: '请选择活动区域', trigger: 'change' }
-                ],
-                date1: [
-                    { type: 'date', required: true, message: '请选择日期', trigger: 'change' }
-                ],
-                date2: [
-                    { type: 'date', required: true, message: '请选择时间', trigger: 'change' }
-                ],
+
                 type: [
                     { type: 'array', required: true, message: '请至少选择一个活动性质', trigger: 'change' }
                 ],
-                resource: [
-                    { required: true, message: '请选择活动资源', trigger: 'change' }
+                address: [
+                    { required: true, message: '请填写地址', trigger: 'change' }
                 ],
-                desc: [
-                    { required: true, message: '请填写活动形式', trigger: 'blur' }
+                name: [
+                    { required: true, message: '请填写真实姓名', trigger: 'blur' }
+                ],
+                stuNum: [
+                    { required: true, message: '请填写学生证号', trigger: 'blur' }
+                ],
+                sex: [
+                    { required: true, message: '请选择性别', trigger: 'blur' }
+                ],
+                idCard: [
+                    { required: true, message: '请填写身份证号', trigger: 'blur' }
                 ],
                 password: [
-                    { required: true, message: '请输入活动名称', trigger: 'blur' },
+                    { required: true, message: '请输入密码', trigger: 'blur' },
                     { min: 3, max: 8, message: '长度在 3 到 8 个字符', trigger: 'blur' }
                 ]
             },
-            options: [{
-                value: '选项1',
-                label: '黄金糕'
-            }, {
-                value: '选项2',
-                label: '双皮奶'
-            }, {
-                value: '选项3',
-                label: '蚵仔煎'
-            }, {
-                value: '选项4',
-                label: '龙须面'
-            }, {
-                value: '选项5',
-                label: '北京烤鸭'
-            }],
             provinceList: '',
             cityList: [],
-            countyList: []
+            countyList: [],
+            userInfo: {}
         };
     },
 
@@ -171,6 +137,7 @@ export default {
             // 拿到对应的城市
             if (this.ruleForm.province == this.provinceList[index].value) {
                 this.cityList = this.provinceList[index].city
+                this.ruleForm.provinceName = this.provinceList[index].label
             }
         },
         // 市
@@ -179,28 +146,95 @@ export default {
             this.ruleForm.street = '';
             if (this.ruleForm.city == this.cityList[index].value) {
                 this.countyList = this.cityList[index].area
+                this.ruleForm.cityName = this.cityList[index].label
             }
         },
-      
-        submitForm (formName) {
-            this.$refs[formName].validate((valid) => {
+        bindCountyChange (name) {
+            this.ruleForm.countyName = name
+        },
+        submitForm () {
+            this.ruleForm.address = this.ruleForm.provinceName + this.ruleForm.cityName + this.ruleForm.countyName
+            this.$refs.formName.validate((valid) => {
                 if (valid) {
-                    alert('submit!');
+                    this.ruleForm.id = this.userInfo.id
+                    let params = this.ruleForm
+                    if (this.$route.query.isEdit) {
+                        axios
+                        .post(
+                            "http://10.8.0.216:9000/pic_lib/user/update",
+                            params
+
+                        )
+                        .then(res => {
+                            console.log(res.data)
+                            if (res.data.code == '200') {
+                                this.$message.success('保存成功')
+                            }
+                        })
+                        .catch(error => {
+                            that.$message({
+                                message: "网络错误,请稍后再试",
+                                type: "error"
+                            });
+                        });
+                    }
+                    axios
+                        .post(
+                            "http://10.8.0.216:9000/pic_lib/user/insert",
+                            params
+
+                        )
+                        .then(res => {
+                            console.log(res.data)
+                            if (res.data.code == '200') {
+                                this.$message.success('保存成功')
+                            }
+                        })
+                        .catch(error => {
+                            that.$message({
+                                message: "网络错误,请稍后再试",
+                                type: "error"
+                            });
+                        });
                 } else {
                     console.log('error submit!!');
                     return false;
                 }
             });
         },
-        resetForm (formName) {
+        resetForm () {
             this.$refs[formName].resetFields();
+        },
+        getUserInfo () {
+            let that = this;
+            axios
+                .get(
+                    "http://10.8.0.216:9000/pic_lib/user/userInfo", {
+                    params: {
+                        id: this.$store.state.userInfo.id,
+                    }
+
+                }
+                )
+                .then(res => {
+                    console.log(res.data)
+                    if (res.data.code == '200') {
+                        this.userInfo = res.data.data
+                    }
+                })
+                .catch(error => {
+                    that.$message({
+                        message: "网络错误,请稍后再试",
+                        type: "error"
+                    });
+                });
         }
+
 
     },
     mounted: function () {
         this.provinceList = JSON.parse(JSON.stringify(products))
-        console.log('this.provinceList', this.provinceList)
-        // this.drawCharts();
+        this.getUserInfo()
     }
 };
 </script>

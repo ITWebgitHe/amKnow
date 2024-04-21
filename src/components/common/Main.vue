@@ -1,6 +1,6 @@
 <template>
   <div :class="getCollapse?'collapsed-main':'main'">
-    <el-col :span="24">
+    <!-- <el-col :span="24">
       <el-breadcrumb class="breadcrumb-inner">
         <el-breadcrumb-item
           v-if="hasParent"
@@ -8,7 +8,7 @@
         >{{ parentName }}</el-breadcrumb-item>
         <el-breadcrumb-item v-if="hasChild" class="bold-font">{{ childName }}</el-breadcrumb-item>
       </el-breadcrumb>
-    </el-col>
+    </el-col> -->
     <el-col :span="24" class="content-wrapper">
       <transition name="fade" mode="out-in">
         <keep-alive>

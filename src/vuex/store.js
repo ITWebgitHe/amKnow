@@ -19,16 +19,16 @@ export default new Vuex.Store({
         collapse: function (state) {
             state.collapsed = !state.collapsed;
         },
-        collapseToTrue: function () {
+        collapseToTrue: function (state) {
             state.collapsed = true;
         },
-        collapseToFalse: function () {
+        collapseToFalse: function (state) {
             state.collapsed = false;
         },
-        isActiveToTrue: function () {
+        isActiveToTrue: function (state) {
             state.isActive = true;
         },
-        isActiveToFalse: function () {
+        isActiveToFalse: function (state) {
             state.isActive = false;
         },
         isShowModify: function (state, show) {

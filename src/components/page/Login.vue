@@ -11,7 +11,8 @@
                 </el-input>
             </el-form-item>
             <el-form-item style="padding-top:20px">
-                <el-button class="login-button" @click.native.prevent="handleLogin">登录</el-button>
+                <el-button class="login-button" @click.native.prevent="handleLogin" v-if="isRegister">登录</el-button>
+                <el-button class="login-button" @click.native.prevent="handleRegister" v-else>注册</el-button>
             </el-form-item>
         </el-form>
     </div>
@@ -27,6 +28,7 @@ export default {
         return {
             state: false,
             logining: false,
+            isRegister:true,
             formData: {
                 username: "admin",
                 password: "123456"
@@ -36,7 +38,8 @@ export default {
                     { required: true, message: "请输入用户名", trigger: "blur" }
                 ],
                 password: [{ required: true, message: "请输入密码", trigger: "blur" }]
-            }
+            },
+            userInfo:{}
         };
     },
     methods: {
@@ -44,48 +47,41 @@ export default {
             this.state = !this.state;
         },
         handleLogin () {
-            let userInfo = {
-                name: '管理员',
-                userType: 'admin'
-            }
-            if (this.formData.username == 'user') {
-                userInfo = {
-                    name: '张三',
-                    userType: 'user'
-                }
-            }
-            this.$store.dispatch('setUserInfo', userInfo);
-            this.initMenus()
-            this.$router.push({ path: "/automobileInfMng" });
-            return
             this.$refs.formData.validate(valid => {
                 if (valid) {
                     let that = this;
                     axios
                         .get(
-                            "http://10.8.0.216:9000/pic_lib/user/test"
-                        )
-                        .then(response => {
-                            let userInfs = response.data;
-                            let flag = false;
-                            let userInf = {};
-                            for (let index in userInfs) {
-                                if (
-                                    userInfs[index].username == that.formData.username &&
-                                    userInfs[index].password == that.formData.password
-                                ) {
-                                    flag = true;
-                                    userInf = userInfs[index];
+                            "http://10.8.0.216:9000/pic_lib/login/loginIn", {
+                                params: {
+                                    username: this.formData.username,
+                                    password: this.formData.password
                                 }
-                            }
-                            if (!flag) {
+
+                        }
+                        )
+                        .then(res => {
+                            console.log(res.data)
+                            if (res.data.code == '200') {
+                                this.userInfo = res.data.data
+                                this.$store.dispatch('setUserInfo', res.data.data);
+                                this.initMenus()
+                                this.$router.push({ path: "/Index" });
+                                sessionStorage.setItem("userInfo", JSON.stringify(res.data.data));
+                            } else if (res.data.code == '500') {
                                 this.$message({
-                                    message: "用户名或密码错误",
+                                    message: res.data.msg,
                                     type: "error"
                                 });
                             } else {
-                                sessionStorage.setItem("userInf", JSON.stringify(userInf));
-                                this.$router.push({ path: "/automobileInfMng" });
+                                this.isRegister = false
+                                this.formData.username = '',
+                                    this.formData.password = ''
+                                this.$message({
+                                    message: "未查询到注册信息！",
+                                    type: "error"
+                                });
+
                             }
                         })
                         .catch(error => {
@@ -97,56 +93,65 @@ export default {
                 }
             });
         },
-        initMenus() {
-            let menus  = [
+        initMenus () {
+            let menus = [
+                {
+                    //一级
+                    entity: {
+                        id: "SY",
+                        name: "主页",
+                        icon: "icon iconfont icon-box",
+                        path: "Index"
+                    },
+                },
+                {
+                    //一级
+                    entity: {
+                        id: "RY",
+                        name: "荣誉管理",
+                        icon: "icon iconfont icon-box",
+                        path: "HonorManagement"
+                    },
+                },
+                {
+                    //一级
+                    entity: {
+                        id: "ZS",
+                        name: "证书管理",
+                        icon: "icon iconfont icon-viewgallery",
+                        path: "CertificateManagement"
+                    }
+                },
+                {
+                    //一级
+                    entity: {
+                        id: "GG",
+                        name: "公告信息管理",
+                        icon: "icon iconfont icon-viewgallery",
+                        path: "AnnouncementInformation"
+                    }
+                },
+                {
+                    //一级
+                    entity: {
+                        id: "XX",
+                        name: "用户信息管理",
+                        icon: "icon iconfont icon-viewgallery",
+                        path: "InformationManagement"
+                    }
+                },
+            ]
+            if (this.userInfo.userType == '1') {
+                menus = [
                     {
                         //一级
                         entity: {
-                            id: "RY",
-                            name: "荣誉管理",
+                            id: "SY",
+                            name: "主页",
                             icon: "icon iconfont icon-box",
-                            path: "HonorManagement"
+                            path: "Index"
                         },
                     },
-                    {
-                        //一级
-                        entity: {
-                            id: "ZS",
-                            name: "证书管理",
-                            icon: "icon iconfont icon-viewgallery",
-                            path: "CertificateManagement"
-                        }
-                    },
-                    {
-                        //一级
-                        entity: {
-                            id: "GG",
-                            name: "公告信息管理",
-                            icon: "icon iconfont icon-viewgallery",
-                            path: "AnnouncementInformation"
-                        }
-                    },
-                    {
-                        //一级
-                        entity: {
-                            id: "XX",
-                            name: "信息管理",
-                            icon: "icon iconfont icon-viewgallery",
-                            path: "InformationManagement"
-                        }
-                    },
-                    {
-                        //一级
-                        entity: {
-                            id: "DC",
-                            name: "调查问卷管理",
-                            icon: "icon iconfont icon-viewgallery",
-                            path: "SurveyQuestionnaire"
-                        }
-                    },
-                ]
-            if (this.formData.username == 'user') {
-               menus = [
                     {
                         //一级
                         entity: {
@@ -186,8 +191,45 @@ export default {
                     }
                 ]
             }
-            this.$store.dispatch('setMenus',menus)
+            this.$store.dispatch('setMenus', menus)
+        },
+        handleRegister(){ // 注册
+            this.$refs.formData.validate(valid => {
+                if (valid) {
+                    let that = this;
+                    axios
+                        .get(
+                            "http://10.8.0.216:9000/pic_lib/login/register", {
+                                params: {
+                                    username: this.formData.username,
+                                    password: this.formData.password
+                                }
+
+                        }
+                        )
+                        .then(res => {
+                            console.log(res.data)
+                            if (res.data.code == '200') {
+                                this.$message.success('注册成功')
+                                this.userInfo = res.data.data
+                                this.$store.dispatch('setUserInfo', res.data.data);
+                                this.initMenus()
+                                this.$router.push({ path: "/Index" });
+                                sessionStorage.setItem("userInf", JSON.stringify(res.data.data));
+                            }
+                        })
+                        .catch(error => {
+                            that.$message({
+                                message: "网络错误,请稍后再试",
+                                type: "error"
+                            });
+                        });
+                }
+            });
         }
+    },
+    mounted() {
+        this.isRegister = true
     }
 };
 </script>
