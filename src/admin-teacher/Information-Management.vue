@@ -1,7 +1,10 @@
 // 信息管理
 <template>
     <div style="height:100%">
-        <el-table :data="tableData" border style="width: 100%;height:100%">
+        <el-col :span="24" class="toolbar" style="padding-bottom: 0px;background:none">
+            <el-button type="primary" @click="onClickDialog">新增</el-button>
+        </el-col>
+        <el-table :data="tableData" border height="calc(100% - 70px)" style="width: 100%;">
             <el-table-column prop="name" label="用户姓名">
             </el-table-column>
             <el-table-column prop="username" label="账号" width="180">
@@ -27,6 +30,24 @@
                 <i class="el-icon-delete" style="padding-left:10px;font-size:18px" @click="onDeleteUser"></i>
             </el-table-column>
         </el-table>
+        <el-dialog title="新增账户" :visible.sync="dialogVisible" width="40%" :before-close="handleClose" label-width="80px">
+            <div style="">
+                <el-form :model="formData" :rules="formRules" ref="formData" :inline="true">
+                    <el-form-item prop="username" label="账号">
+                        <el-input type="text" v-model="formData.username" placeholder="请输入用户名" style="width:350px"></el-input>
+                    </el-form-item>
+                    
+                    <el-form-item prop="password" label="密码">
+                        <el-input type="stext" v-model="formData.password" placeholder="请输入密码" style="width:350px"> 
+                        </el-input>
+                    </el-form-item>
+                </el-form>
+            </div>
+            <span slot="footer" class="dialog-footer">
+                <el-button @click="handleClose">取 消</el-button>
+                <el-button type="primary" @click="onConfirm">确 定</el-button>
+            </span>
+        </el-dialog>
     </div>
 
 </template>
@@ -36,25 +57,20 @@ import axios from "axios";
 export default {
     data () {
         return {
-            tableData: [{
-                date: '2016-05-02',
-                name: '王小虎',
-                address: '上海市普陀区金沙江路 1518 弄'
-            }, {
-                date: '2016-05-04',
-                name: '王小虎',
-                address: '上海市普陀区金沙江路 1517 弄'
-            }, {
-                date: '2016-05-01',
-                name: '王小虎',
-                address: '上海市普陀区金沙江路 1519 弄'
-            }, {
-                date: '2016-05-03',
-                name: '王小虎',
-                address: '上海市普陀区金沙江路 1516 弄'
-            }],
+            tableData: [],
             pageNum: 1,
-            pageSize: 20
+            pageSize: 20,
+            dialogVisible: false,
+            formData: {
+                username: '',
+                password: ''
+            },
+            formRules: {
+                username: [
+                    { required: true, message: "请输入用户名", trigger: "blur" }
+                ],
+                password: [{ required: true, message: "请输入密码", trigger: "blur" }]
+            },
         }
     },
     methods: {
@@ -104,6 +120,34 @@ export default {
                         type: "error"
                     });
                 });
+        },
+        handleClose () {
+            this.dialogVisible = false
+        },
+        onClickDialog () {
+            this.formData.username = ''
+            this.formData.password = ''
+            this.dialogVisible = true
+        },
+        onConfirm () {
+            this.$refs.formData.validate(valid => {
+                if (valid) {
+                    let params = {
+                        username: this.formData.username,
+                        password: this.formData.password,
+                    }
+                    axios
+                        .post(
+                            "http://10.8.0.216:9000/pic_lib/user/insert",
+                            params
+
+                        )
+                        .then(res => {
+                            this.dialogVisible = false
+                            this.getInfoList()
+                        })
+                }
+            })
         }
     },
     mounted () {

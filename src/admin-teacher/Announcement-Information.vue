@@ -1,13 +1,13 @@
 // 公告信息管理
 <template>
-    <el-table :data="tableData" border style="width: 100%">
-        <el-table-column prop="date" label="公告标题">
+    <el-table :data="noticeList" border style="width: 100%">
+        <el-table-column prop="title" label="公告标题">
         </el-table-column>
         <el-table-column prop="name" label="公告内容" width="180">
         </el-table-column>
         <el-table-column prop="name" label="公告栏图片" width="180">
         </el-table-column>
-        <el-table-column prop="address" label="创建时间">
+        <el-table-column prop="creatTime" label="创建时间">
         </el-table-column>
         <el-table-column label="操作" width="100px">
             <i class="el-icon-edit" style="font-size:18px"></i>
@@ -20,24 +20,37 @@
 export default {
     data () {
         return {
-            tableData: [{
-                date: '2016-05-02',
-                name: '王小虎',
-                address: '上海市普陀区金沙江路 1518 弄'
-            }, {
-                date: '2016-05-04',
-                name: '王小虎',
-                address: '上海市普陀区金沙江路 1517 弄'
-            }, {
-                date: '2016-05-01',
-                name: '王小虎',
-                address: '上海市普陀区金沙江路 1519 弄'
-            }, {
-                date: '2016-05-03',
-                name: '王小虎',
-                address: '上海市普陀区金沙江路 1516 弄'
-            }]
+            noticeList: []
         }
+    },
+    methods:{
+        getNoticeList () {
+            let that = this;
+            axios
+                .get(
+                    "http://10.8.0.216:9000/pic_lib/notice/pageList", {
+                    params: {
+                        pageNum: 1,
+                        pageSize: 10
+                    }
+                }
+                )
+                .then(res => {
+                    console.log(res.data)
+                    if (res.data.code == '200') {
+                        this.noticeList = res.data.data.list
+                    }
+                })
+                .catch(error => {
+                    that.$message({
+                        message: "网络错误,请稍后再试",
+                        type: "error"
+                    });
+                });
+        }
+    },
+    mounted() {
+        this.getNoticeList()
     }
 }
 </script>

@@ -27,7 +27,7 @@ export default new Router({
                     component: resolve => require(['@/components/page/Index.vue'], resolve),
                     meta: {
                         keepAlive: true // 需要缓存
-                    }
+                    },
                 },
                 {
                     path: 'automobileInfMng',
@@ -67,7 +67,7 @@ export default new Router({
                     component: resolve => require(['@/admin-teacher/Announcement-Information.vue'], resolve),
                     meta: {
                         keepAlive: true, // 需要缓存
-                        title:'公告信息管理',
+                        title: '公告信息管理',
                     }
                 },
                 {
@@ -76,7 +76,7 @@ export default new Router({
                     component: resolve => require(['@/admin-teacher/Certificate-Management.vue'], resolve),
                     meta: {
                         keepAlive: true, // 需要缓存
-                        title:'证书管理',
+                        title: '证书管理',
                     }
                 },
                 {
@@ -85,7 +85,7 @@ export default new Router({
                     component: resolve => require(['@/admin-teacher/Honor-Management.vue'], resolve),
                     meta: {
                         keepAlive: true, // 需要缓存
-                        title:'荣誉管理',
+                        title: '荣誉管理',
                     }
                 },
                 {
@@ -94,9 +94,18 @@ export default new Router({
                     component: resolve => require(['@/admin-teacher/Information-Management.vue'], resolve),
                     meta: {
                         keepAlive: true, // 需要缓存
-                        title:'用户信息管理',
+                        title: '用户信息管理',
                     }
                 },
+                {
+                    path: 'noticeDetail',
+                    name: 'noticeDetail',
+                    component: resolve => require(['@/components/page/noticeDetail.vue'], resolve),
+                    meta: {
+                        keepAlive: true // 需要缓存
+                    },
+                }
+
             ]
         },
         {

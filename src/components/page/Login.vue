@@ -11,8 +11,8 @@
                 </el-input>
             </el-form-item>
             <el-form-item style="padding-top:20px">
-                <el-button class="login-button" @click.native.prevent="handleLogin" v-if="isRegister">登录</el-button>
-                <el-button class="login-button" @click.native.prevent="handleRegister" v-else>注册</el-button>
+                <el-button class="login-button" @click.native.prevent="handleLogin">登录</el-button>
+                <!-- <el-button class="login-button" @click.native.prevent="handleRegister" v-else>注册</el-button> -->
             </el-form-item>
         </el-form>
     </div>
@@ -66,7 +66,7 @@ export default {
                                 this.userInfo = res.data.data
                                 this.$store.dispatch('setUserInfo', res.data.data);
                                 this.initMenus()
-                                this.$router.push({ path: "/Index" });
+                                this.$router.push({ path: "Index" });
                                 sessionStorage.setItem("userInfo", JSON.stringify(res.data.data));
                             } else if (res.data.code == '500') {
                                 this.$message({
@@ -193,40 +193,40 @@ export default {
             }
             this.$store.dispatch('setMenus', menus)
         },
-        handleRegister(){ // 注册
-            this.$refs.formData.validate(valid => {
-                if (valid) {
-                    let that = this;
-                    axios
-                        .get(
-                            "http://10.8.0.216:9000/pic_lib/login/register", {
-                                params: {
-                                    username: this.formData.username,
-                                    password: this.formData.password
-                                }
+        // handleRegister(){ // 注册
+        //     this.$refs.formData.validate(valid => {
+        //         if (valid) {
+        //             let that = this;
+        //             axios
+        //                 .get(
+        //                     "http://10.8.0.216:9000/pic_lib/login/register", {
+        //                         params: {
+        //                             username: this.formData.username,
+        //                             password: this.formData.password
+        //                         }
 
-                        }
-                        )
-                        .then(res => {
-                            console.log(res.data)
-                            if (res.data.code == '200') {
-                                this.$message.success('注册成功')
-                                this.userInfo = res.data.data
-                                this.$store.dispatch('setUserInfo', res.data.data);
-                                this.initMenus()
-                                this.$router.push({ path: "/Index" });
-                                sessionStorage.setItem("userInf", JSON.stringify(res.data.data));
-                            }
-                        })
-                        .catch(error => {
-                            that.$message({
-                                message: "网络错误,请稍后再试",
-                                type: "error"
-                            });
-                        });
-                }
-            });
-        }
+        //                 }
+        //                 )
+        //                 .then(res => {
+        //                     console.log(res.data)
+        //                     if (res.data.code == '200') {
+        //                         this.$message.success('注册成功')
+        //                         this.userInfo = res.data.data
+        //                         this.$store.dispatch('setUserInfo', res.data.data);
+        //                         this.initMenus()
+        //                         this.$router.push({ path: "/Index" });
+        //                         sessionStorage.setItem("userInf", JSON.stringify(res.data.data));
+        //                     }
+        //                 })
+        //                 .catch(error => {
+        //                     that.$message({
+        //                         message: "网络错误,请稍后再试",
+        //                         type: "error"
+        //                     });
+        //                 });
+        //         }
+        //     });
+        // }
     },
     mounted() {
         this.isRegister = true
