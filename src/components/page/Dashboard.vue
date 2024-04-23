@@ -173,7 +173,7 @@ export default {
                             )
                             .then(res => {
                                 console.log(res.data)
-                                if (res.data.code == '200') {
+                                if (res.data.code == 200) {
                                     this.$message.success('保存成功')
                                 }
                             })
@@ -192,7 +192,7 @@ export default {
                         )
                         .then(res => {
                             console.log(res.data)
-                            if (res.data.code == '200') {
+                            if (res.data.code == 200) {
                                 this.$message.success('保存成功')
                             }
                         })
@@ -224,7 +224,7 @@ export default {
                 )
                 .then(res => {
                     console.log(res.data)
-                    if (res.data.code == '200') {
+                    if (res.data.code == 200) {
                         this.userInfo = res.data.data
                         this.ruleForm.password = this.userInfo.password
                         this.ruleForm.name = this.userInfo.name

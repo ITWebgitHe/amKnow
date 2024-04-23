@@ -31,7 +31,7 @@ export default {
             isRegister:true,
             formData: {
                 username: "admin",
-                password: "123456"
+                password: "admin"
             },
             formRules: {
                 username: [

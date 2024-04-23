@@ -17,6 +17,7 @@
 </template>
 
 <script>
+import axios from "axios";
 export default {
     data () {
         return {
@@ -37,7 +38,7 @@ export default {
                 )
                 .then(res => {
                     console.log(res.data)
-                    if (res.data.code == '200') {
+                    if (res.data.code == 200) {
                         this.noticeList = res.data.data.list
                     }
                 })
