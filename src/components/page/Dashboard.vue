@@ -282,6 +282,6 @@ export default {
     padding: 0px;
 }
 .el-form-item {
-    margin-bottom: 16px;
+    margin-bottom: 14px;
 }
 </style>

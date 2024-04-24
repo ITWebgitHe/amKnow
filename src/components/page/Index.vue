@@ -2,8 +2,8 @@
 <template>
     <main>
         <el-carousel indicator-position="outside">
-            <el-carousel-item v-for="(item,index) in imgList" :key="index">
-                <img :src="item.url" />
+            <el-carousel-item v-for="(item,index) in noticeList" :key="index">
+                <img :src="item.imgWebUrl" style="width:100%;height:100%;object-fit:cover"/>
             </el-carousel-item>
         </el-carousel>
         <div style="margin-top:10px">
@@ -32,10 +32,12 @@ export default {
                 { url: require('@/assets/3.jpg') },
                 { url: require('@/assets/4.jpeg') },
             ],
-            noticeList: []
+            noticeList: [],
+            noticeContent:[]
         }
     },
     mounted () {
+        console.log('用户信息',this.$store.state.userInfo)
         this.getNoticeList()
     },
     methods: {
@@ -66,7 +68,7 @@ export default {
         onclickNotice(item) {
             this.$router.push({
                 path:'noticeDetail',
-                query:{id:item.id}
+                query:item
             })
         }
     }
@@ -92,5 +94,9 @@ export default {
     display: flex;
     cursor: pointer;
     justify-content: space-between;
+}
+.notice-item {
+    padding:5px 0px;
+    font-size: 15px;
 }
 </style>

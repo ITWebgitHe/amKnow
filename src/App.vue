@@ -20,6 +20,7 @@ export default {
   color: #48576a;
   margin-top: 0px;
   overflow: hidden;
+  
 }
 .fade-enter-active,
 .fade-leave-active {

@@ -1,21 +1,24 @@
 <template>
-    <div class="login-container">
-        <el-form :model="formData" :rules="formRules" ref="formData">
-            <span class="title">毕业生管理系统</span>
-            <el-form-item prop="username">
-                <el-input type="text" v-model="formData.username" auto-complete="off" @change="formData.username=formData.username.replace(/\s+/g,'')" prefix-icon="icon iconfont icon-peoplefill" placeholder="请输入用户名"></el-input>
-            </el-form-item>
-            <el-form-item prop="password">
-                <el-input :type="state ? 'text' : 'password'" v-model="formData.password" auto-complete="off" prefix-icon="icon iconfont icon-mima" placeholder="请输入密码">
-                    <i slot="suffix" @click="showOrHide" style="cursor:pointer;" :class="state ? 'icon iconfont icon-yanjing_kai' : 'icon iconfont icon-yanjing_bi'"></i>
-                </el-input>
-            </el-form-item>
-            <el-form-item style="padding-top:20px">
-                <el-button class="login-button" @click.native.prevent="handleLogin">登录</el-button>
-                <!-- <el-button class="login-button" @click.native.prevent="handleRegister" v-else>注册</el-button> -->
-            </el-form-item>
-        </el-form>
+    <div class="main">
+        <div class="login-container">
+            <el-form :model="formData" :rules="formRules" ref="formData">
+                <span class="title">毕业生管理系统</span>
+                <el-form-item prop="username">
+                    <el-input type="text" v-model="formData.username" auto-complete="off" @change="formData.username=formData.username.replace(/\s+/g,'')" prefix-icon="icon iconfont icon-peoplefill" placeholder="请输入用户名"></el-input>
+                </el-form-item>
+                <el-form-item prop="password">
+                    <el-input :type="state ? 'text' : 'password'" v-model="formData.password" auto-complete="off" prefix-icon="icon iconfont icon-mima" placeholder="请输入密码">
+                        <i slot="suffix" @click="showOrHide" style="cursor:pointer;" :class="state ? 'icon iconfont icon-yanjing_kai' : 'icon iconfont icon-yanjing_bi'"></i>
+                    </el-input>
+                </el-form-item>
+                <el-form-item style="padding-top:20px">
+                    <el-button class="login-button" @click.native.prevent="handleLogin">登录</el-button>
+                    <!-- <el-button class="login-button" @click.native.prevent="handleRegister" v-else>注册</el-button> -->
+                </el-form-item>
+            </el-form>
+        </div>
     </div>
+
 </template>
 <script>
 import axios from "axios";
@@ -28,10 +31,10 @@ export default {
         return {
             state: false,
             logining: false,
-            isRegister:true,
+            isRegister: true,
             formData: {
-                username: "admin",
-                password: "admin"
+                username: "",
+                password: ""
             },
             formRules: {
                 username: [
@@ -39,7 +42,7 @@ export default {
                 ],
                 password: [{ required: true, message: "请输入密码", trigger: "blur" }]
             },
-            userInfo:{}
+            userInfo: {}
         };
     },
     methods: {
@@ -53,11 +56,10 @@ export default {
                     axios
                         .get(
                             "http://10.8.0.216:9000/pic_lib/login/loginIn", {
-                                params: {
-                                    username: this.formData.username,
-                                    password: this.formData.password
-                                }
-
+                            params: {
+                                username: this.formData.username,
+                                password: this.formData.password
+                            }
                         }
                         )
                         .then(res => {
@@ -140,6 +142,14 @@ export default {
                         path: "InformationManagement"
                     }
                 },
+                {
+                    entity: {
+                        id: "ABM",
+                        name: "校友论坛",
+                        icon: "",
+                        path: "automobileBrandMng"
+                    }
+                }
             ]
             if (this.userInfo.userType == '1') {
                 menus = [
@@ -179,6 +189,24 @@ export default {
                                 }
                             }
                         ]
+                    },
+                    {
+                        //一级
+                        entity: {
+                            id: "RY",
+                            name: "荣誉管理",
+                            icon: "icon iconfont icon-box",
+                            path: "HonorManagement"
+                        },
+                    },
+                    {
+                        //一级
+                        entity: {
+                            id: "ZS",
+                            name: "证书管理",
+                            icon: "icon iconfont icon-viewgallery",
+                            path: "CertificateManagement"
+                        }
                     },
                     {
                         //一级
@@ -228,16 +256,25 @@ export default {
         //     });
         // }
     },
-    mounted() {
+    mounted () {
         this.isRegister = true
     }
 };
 </script>
 <style scoped>
+.main {
+    width: 100%;
+    height: 100%;
+    background-image: url("../../assets/2.jpg");
+    background-repeat: no-repeat;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
 .login-container {
     border-radius: 5px;
     background-clip: padding-box;
-    margin: 25vh auto;
+    /* margin: 200px auto; */
     width: 300px;
     padding: 35px 35px 15px 35px;
     background: #fff;

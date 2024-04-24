@@ -17,10 +17,10 @@
                     <img :src="image" class="head-portrait">
                 </span>
                 <el-dropdown-menu slot="dropdown">
-                    <el-dropdown-item>
+                    <!-- <el-dropdown-item>
                         <i class="icon iconfont icon-user"></i>
                         <span class="icon-span">个人信息</span>
-                    </el-dropdown-item>
+                    </el-dropdown-item> -->
                     <el-dropdown-item>
                         <i class="icon iconfont icon-edit-square"></i>
                         <span class="icon-span" @click="onEditInfo">修改资料</span>

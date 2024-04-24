@@ -105,7 +105,6 @@ export default {
     },
     methods: {
         init () {
-            console.log('this.$store.state.userInfo', this.$store.state.menus)
             let userInfo = this.$store.state.userInfo
             this.menuData = this.$store.state.menus
         

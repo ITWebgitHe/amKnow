@@ -24,7 +24,7 @@
                 <template slot-scope="scope">
                     <div class="flex align-center">
                         <i class="el-icon-edit" style="font-size:18px;cursor:pointer" @click="onEditClick(scope.row)"></i>
-                        <i class="el-icon-delete" style="padding-left:10px;font-size:18px" @click="onDeleteClick(scope.row)"></i> />
+                        <i class="el-icon-delete" style="padding-left:10px;font-size:18px" @click="onDeleteClick(scope.row)"></i>
                     </div>
                 </template>
             </el-table-column>
@@ -177,7 +177,7 @@ export default {
                                 console.log(res.data)
                                 if (res.data.code == 200) {
                                     this.$message.success('保存成功')
-                                    this.dialogVisible = fasle
+                                    this.dialogVisible = false
                                     this.getInfoList()
                                 }
                             })
@@ -212,7 +212,27 @@ export default {
             })
 
         },
-        onDeleteClick () {
+        onDeleteClick (row) {
+            let params = {
+                id:row.id
+            }
+            axios
+                .post(
+                    "http://10.8.0.216:9000/pic_lib//stu-honor/delete", params)
+                .then(res => {
+                    console.log(res.data)
+                    if (res.data.code == 200) {
+                        this.$message.success('删除成功')
+                        this.dialogVisible = false
+                        this.getInfoList()
+                    }
+                })
+                .catch(error => {
+                    that.$message({
+                        message: "网络错误,请稍后再试",
+                        type: "error"
+                    });
+                });
 
         }
     },

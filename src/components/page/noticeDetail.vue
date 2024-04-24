@@ -50,7 +50,9 @@ export default {
         }
     },
     mounted () {
-        this.getNoticeDetail()
+        this.noticeDetail = this.$route.query
+        console.log('this.noticeDetail',this.noticeDetail)
+       
     }
 }
 </script>

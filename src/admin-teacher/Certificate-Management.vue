@@ -19,6 +19,13 @@
             </el-table-column>
             <el-table-column prop="createTime" label="创建时间">
             </el-table-column>
+            <el-table-column label="证书图片">
+                <template slot-scope="scope">
+                    <!-- <div @click="viewImg(scope.row.imgWebUrl)">查看</div> -->
+                    <img :src="scope.row.certImgUrl" width="100px" height="100px" style="objct-fit:cover"/>
+                     <!-- <a class="a-style" @click="handlePreView(scope.row)">预览</a> -->
+                </template>
+            </el-table-column>
             <el-table-column label="操作" width="100px">
                 <template slot-scope="scope">
                     <div class="flex align-center">
@@ -202,7 +209,7 @@ export default {
                                 console.log(res.data)
                                 if (res.data.code == '200') {
                                     this.$message.success('证书信息保存成功')
-                                    this.dialogVisible = fasle
+                                    this.dialogVisible = false
                                     this.getInfoList()
                                 }
                             })
@@ -237,7 +244,27 @@ export default {
             })
 
         },
-        onDeleteClick () {
+        onDeleteClick (row) {
+            let params = {
+                id:row.id
+            }
+            axios
+                .post(
+                    "http://10.8.0.216:9000/pic_lib/stu-cert/delete", params)
+                .then(res => {
+                    console.log(res.data)
+                    if (res.data.code == 200) {
+                        this.$message.success('删除成功')
+                        this.dialogVisible = false
+                        this.getInfoList()
+                    }
+                })
+                .catch(error => {
+                    that.$message({
+                        message: "网络错误,请稍后再试",
+                        type: "error"
+                    });
+                });
 
         },
         submitUpload () {
