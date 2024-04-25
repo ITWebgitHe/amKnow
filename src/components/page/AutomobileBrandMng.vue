@@ -91,7 +91,7 @@ export default {
                 params.type = '1'
                 axios
                     .post(
-                        "http://10.8.0.216:9000/pic_lib/message-board/insert", params)
+                        "http://127.0.0.1:9000/pic_lib/message-board/insert", params)
                     .then(res => {
                         console.log(res.data)
                         if (res.data.code == 200) {
@@ -109,7 +109,7 @@ export default {
             } else {
                 axios
                     .post(
-                        "http://10.8.0.216:9000/pic_lib/message-board/insert", params)
+                        "http://127.0.0.1:9000/pic_lib/message-board/insert", params)
                     .then(res => {
                         console.log(res.data)
                         if (res.data.code == 200) {
@@ -137,7 +137,7 @@ export default {
             let that = this;
             axios
                 .get(
-                    "http://10.8.0.216:9000/pic_lib/message-board/pageList", {
+                    "http://127.0.0.1:9000/pic_lib/message-board/pageList", {
                     params: {
                         pageNum: this.pageNum,
                         pageSize: this.pageSize
@@ -166,7 +166,7 @@ export default {
            let that = this;
             axios
                 .get(
-                    "http://10.8.0.216:9000/pic_lib/message-board/delete", {
+                    "http://127.0.0.1:9000/pic_lib/message-board/delete", {
                     params: {
                         id: row.id,
                         type: row.type,

@@ -165,7 +165,7 @@ export default {
             let that = this;
             axios
                 .get(
-                    "http://10.8.0.216:9000/pic_lib/destination/destList", {}
+                    "http://127.0.0.1:9000/pic_lib/destination/destList", {}
                 )
                 .then(res => {
                     console.log(res.data)
@@ -200,7 +200,7 @@ export default {
             }
             axios
                 .post(
-                    "http://10.8.0.216:9000/pic_lib/destination/insert",
+                    "http://127.0.0.1:9000/pic_lib/destination/insert",
                     params
 
                 )

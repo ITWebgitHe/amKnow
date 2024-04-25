@@ -39,7 +39,7 @@
 export default {
     data () {
         return {
-            systemName: "毕业生管理系统",
+            systemName: "毕业生追踪系统",
             image: require("../../../static/image/male.jpg"),
             userInfo: {},
             state: {}

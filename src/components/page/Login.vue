@@ -2,7 +2,7 @@
     <div class="main">
         <div class="login-container">
             <el-form :model="formData" :rules="formRules" ref="formData">
-                <span class="title">毕业生管理系统</span>
+                <span class="title">毕业生追踪系统</span>
                 <el-form-item prop="username">
                     <el-input type="text" v-model="formData.username" auto-complete="off" @change="formData.username=formData.username.replace(/\s+/g,'')" prefix-icon="icon iconfont icon-peoplefill" placeholder="请输入用户名"></el-input>
                 </el-form-item>
@@ -55,7 +55,7 @@ export default {
                     let that = this;
                     axios
                         .get(
-                            "http://10.8.0.216:9000/pic_lib/login/loginIn", {
+                            "http://127.0.0.1:9000/pic_lib/login/loginIn", {
                             params: {
                                 username: this.formData.username,
                                 password: this.formData.password
@@ -227,7 +227,7 @@ export default {
         //             let that = this;
         //             axios
         //                 .get(
-        //                     "http://10.8.0.216:9000/pic_lib/login/register", {
+        //                     "http://127.0.0.1:9000/pic_lib/login/register", {
         //                         params: {
         //                             username: this.formData.username,
         //                             password: this.formData.password

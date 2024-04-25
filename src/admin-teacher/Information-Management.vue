@@ -3,6 +3,8 @@
     <div style="height:100%">
         <el-col :span="24" class="toolbar" style="padding-bottom: 0px;background:none">
             <el-button type="primary" @click="onClickDialog">新增</el-button>
+            <el-upload class="upload-demo" ref="upload" accept=".xlsx, .xlsm, .xls" :auto-upload="true" :action="action" :limit="1" :on-exceed="handleExceed" :show-file-list="false" :on-success="onSuccess"><el-button type="primary" >导入</el-button></el-upload>
+
         </el-col>
         <el-table :data="tableData" border height="calc(100% - 70px)" style="width: 100%;">
             <el-table-column prop="name" label="用户姓名">
@@ -30,15 +32,16 @@
                 <i class="el-icon-delete" style="padding-left:10px;font-size:18px" @click="onDeleteUser"></i>
             </el-table-column>
         </el-table>
+
         <el-dialog title="新增账户" :visible.sync="dialogVisible" width="40%" :before-close="handleClose" label-width="80px">
             <div style="">
                 <el-form :model="formData" :rules="formRules" ref="formData" :inline="true">
                     <el-form-item prop="username" label="账号">
                         <el-input type="text" v-model="formData.username" placeholder="请输入用户名" style="width:350px"></el-input>
                     </el-form-item>
-                    
+
                     <el-form-item prop="password" label="密码">
-                        <el-input type="stext" v-model="formData.password" placeholder="请输入密码" style="width:350px"> 
+                        <el-input type="stext" v-model="formData.password" placeholder="请输入密码" style="width:350px">
                         </el-input>
                     </el-form-item>
                 </el-form>
@@ -65,6 +68,7 @@ export default {
                 username: '',
                 password: ''
             },
+            action: 'http://127.0.0.1:9000/pic_lib/user/importUserInfo',
             formRules: {
                 username: [
                     { required: true, message: "请输入用户名", trigger: "blur" }
@@ -78,7 +82,7 @@ export default {
             let that = this;
             axios
                 .get(
-                    "http://10.8.0.216:9000/pic_lib/user/pageList", {
+                    "http://127.0.0.1:9000/pic_lib/user/pageList", {
                     params: {
 
                         pageNum: this.pageNum,
@@ -102,7 +106,7 @@ export default {
         onDeleteUser () {
             axios
                 .get(
-                    "http://10.8.0.216:9000/pic_lib/user/delete", {
+                    "http://127.0.0.1:9000/pic_lib/user/delete", {
                     params: {
 
                     }
@@ -138,7 +142,7 @@ export default {
                     }
                     axios
                         .post(
-                            "http://10.8.0.216:9000/pic_lib/user/insert",
+                            "http://127.0.0.1:9000/pic_lib/user/insert",
                             params
 
                         )
@@ -148,6 +152,13 @@ export default {
                         })
                 }
             })
+        },
+        handleExceed (files, fileList) {
+            this.$message.warning(`当前限制选择 1 个文件，本次选择了 ${files.length} 个文件，共选择了 ${files.length + fileList.length} 个文件`);
+        },
+        onSuccess() {
+            this.$message.success('导入成功')
+            this.getInfoList()
         }
     },
     mounted () {
@@ -157,4 +168,7 @@ export default {
 </script>
 
 <style>
+.upload-demo {
+    display: inline;
+}
 </style>
