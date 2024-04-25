@@ -266,6 +266,7 @@ export default {
     width: 100%;
     height: 100%;
     background-image: url("../../assets/2.jpg");
+    background-size: 100%;
     background-repeat: no-repeat;
     display: flex;
     justify-content: center;
