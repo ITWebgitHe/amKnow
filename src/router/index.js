@@ -87,11 +87,19 @@ export default new Router({
                         keepAlive: true, // 需要缓存
                         title: '荣誉管理',
                     }
+                },{
+                    path: 'HonorManagement',
+                    name: 'HonorManagement',
+                    component: resolve => require(['@/admin-teacher/Honor-Management.vue'], resolve),
+                    meta: {
+                        keepAlive: true, // 需要缓存
+                        title: '荣誉管理',
+                    }
                 },
                 {
-                    path: 'InformationManagement',
-                    name: 'InformationManagement',
-                    component: resolve => require(['@/admin-teacher/Information-Management.vue'], resolve),
+                    path: 'UserDestinationManagement',
+                    name: 'UserDestinationManagement',
+                    component: resolve => require(['@/admin-teacher/User-destination-management.vue'], resolve),
                     meta: {
                         keepAlive: true, // 需要缓存
                         title: '用户信息管理',
@@ -104,8 +112,7 @@ export default new Router({
                     meta: {
                         keepAlive: true // 需要缓存
                     },
-                }
-
+                },
             ]
         },
         {

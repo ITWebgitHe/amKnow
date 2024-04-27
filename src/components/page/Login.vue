@@ -143,6 +143,15 @@ export default {
                     }
                 },
                 {
+                    //一级
+                    entity: {
+                        id: "QX",
+                        name: "用户去向管理",
+                        icon: "icon iconfont icon-viewgallery",
+                        path: 'UserDestinationManagement',
+                    }
+                },
+                {
                     entity: {
                         id: "ABM",
                         name: "校友论坛",

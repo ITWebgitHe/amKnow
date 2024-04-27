@@ -1,4 +1,4 @@
-// 荣誉管理
+// 证书管理
 <template>
     <div style="height:100%">
         <el-col :span="24" class="toolbar" style="padding-bottom: 0px;background:none">
