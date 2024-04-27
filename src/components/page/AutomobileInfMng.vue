@@ -73,7 +73,7 @@
                     <el-col :span="8">
                         <el-form-item label="出发日期">
                             <el-date-picker v-model="filters.cfrq" type="date" placeholder="请选择出发日期" style="width:240px" value-format="yyyy-MM-dd">
-                                </el-date-picker>
+                            </el-date-picker>
                         </el-form-item>
                     </el-col>
                 </el-form>
@@ -155,10 +155,8 @@ export default {
         this.getestList()
         this.userInfo = this.$store.state.userInfo
         console.log(this.userInfo)
-        this.filters.xsxh = this.userInfo.stuNum
-        this.filters.sjh = this.userInfo.phone
-        this.filters.username = this.userInfo.name
-
+        this.destDetail()
+        this.getUseInfo()
     },
     methods: {
         getestList () {
@@ -181,23 +179,97 @@ export default {
                     });
                 });
         },
+        getUseInfo () {
+            let that = this;
+            axios
+                .get(
+                    "http://127.0.0.1:9000/pic_lib//user/userInfo", {
+                    params: {
+                        id: this.userInfo.id
+                    }
+                }
+                )
+                .then(res => {
+                    console.log(res.data)
+                    if (res.data.code == 200) {
+                        this.userInfo = res.data.data
+                        this.filters.xsxh = this.userInfo.stuNum
+                        this.filters.sjh = this.userInfo.phone
+                        this.filters.username = this.userInfo.name
+                          this.$store.dispatch('setUserInfo', res.data.data);
+                    }
+                })
+                .catch(error => {
+                    that.$message({
+                        message: "网络错误,请稍后再试",
+                        type: "error"
+                    });
+                });
+        },
+        destDetail () {
+            let that = this;
+            axios
+                .get(
+                    "http://127.0.0.1:9000/pic_lib/destination/destDetail", {
+                    params: {
+                        userId: that.userInfo.id,
+                    }
+                }
+                )
+                .then(res => {
+                    console.log(res.data)
+                    if (res.data.code == 200) {
+                        let result = res.data.data
+                        this.filters.dwmc = result.map.dwmc
+                        this.filters.dwdz = result.map.dwdz
+                        this.filters.gw = result.map.gw
+                        this.filters.xz = result.map.xz
+                        this.filters.jz = result.map.jz
+                        this.filters.dz = result.map.dz
+                        this.filters.cfrq = result.map.cfrq
+                        this.filters.xxmc = result.map.xxmc
+                        this.filters.kyzy = result.map.kyzy
+                        this.filters.kyfs = result.map.kyfs
+                        this.filters.remark = result.map.bz
+                        this.filters.destinationId = result.destinationId
+                        this.filters.destinationArea = result.destinationArea
+                    }
+                })
+                .catch(error => {
+                    that.$message({
+                        message: "网络错误,请稍后再试",
+                        type: "error"
+                    });
+                });
+        },
         searchAutomobile () {
-            let detail = ''
+            let map = {}
             if (this.filters.destinationId == '001') {
-                detail = this.filters.dwmc + this.filters.dwdz + this.filters.gw + this.filters.xz
+                map.dwmc = this.filters.dwmc
+                map.dwdz = this.filters.dwdz
+                map.gw = this.filters.gw
+                map.xz = this.filters.xz
             } else if (this.filters.destinationId == '002') {
-                detail = this.filters.jz + this.filters.dz + this.filters.cfrq
+                map.jz = this.filters.jz
+                map.dwdz = this.filters.dwdz
+                map.dz = this.filters.dz
+                map.cfrq = this.filters.cfrq
             } else if (this.filters.destinationId == '003') {
-                detail = this.filters.xxmc + this.filters.kyzy + this.filters.kyfs
+                map.xxmc = this.filters.xxmc
+                map.kyzy = this.filters.kyzy
+                map.kyfs = this.filters.kyfs
+
             } else if (this.filters.destinationId == '004') {
-                detail = this.filters.bz
+                map.remark = this.filters.remark
+
             }
             let params = {
-                detail: detail,
                 userId: this.userInfo.id,
                 destinationId: this.filters.destinationId,
-                destinationArea: this.filters.destinationArea
+                destinationArea: this.filters.destinationArea,
+                map: map
             }
+
             axios
                 .post(
                     "http://127.0.0.1:9000/pic_lib/destination/insert",

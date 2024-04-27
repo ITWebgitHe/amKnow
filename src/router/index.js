@@ -97,12 +97,21 @@ export default new Router({
                     }
                 },
                 {
+                    path: 'InformationManagement',
+                    name: 'InformationManagement',
+                    component: resolve => require(['@/admin-teacher/Information-Management.vue'], resolve),
+                    meta: {
+                        keepAlive: true, // 需要缓存
+                        title: '用户信息管理',
+                    }
+                },
+                {
                     path: 'UserDestinationManagement',
                     name: 'UserDestinationManagement',
                     component: resolve => require(['@/admin-teacher/User-destination-management.vue'], resolve),
                     meta: {
                         keepAlive: true, // 需要缓存
-                        title: '用户信息管理',
+                        title: '用户去向管理',
                     }
                 },
                 {

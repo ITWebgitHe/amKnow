@@ -1,21 +1,24 @@
 // 用户去向管理
 <template>
     <div style="height:100%">
-        <!-- <el-col :span="24" class="toolbar" style="padding-bottom: 0px;background:none">
-            <el-button type="primary" @click="onClickDialog">新增</el-button>
-        </el-col> -->
+        <el-col :span="24" class="toolbar" style="padding-bottom: 0px;background:none">
+            <el-select v-model="destinationId" placeholder="请选择">
+                <el-option v-for="item in automobiledestinationIds" :key="item.id" :label="item.type" :value="item.id"></el-option>
+            </el-select>
+            <el-button type="primary" @click="onClickDialog">查询</el-button>
+        </el-col>
         <el-table :data="tableData" height="100%" border style="width: 100%">
-            <el-table-column prop="honorName" label="荣誉名称">
+            <el-table-column prop="name" label="学生姓名">
             </el-table-column>
-            <el-table-column prop="honorTime" label="荣誉获得时间" width="180">
+            <el-table-column prop="stuNum" label="学生学号" width="180">
             </el-table-column>
-            <el-table-column prop="honorUser" label="获得荣誉用户">
+            <el-table-column prop="phone" label="学生手机号">
             </el-table-column>
-            <el-table-column prop="honorLevel" label="荣誉等级">
+            <el-table-column prop="destinationArea" label="去向地点">
             </el-table-column>
-            <el-table-column prop="issuingAuthority" label="荣誉颁发机构" width="180">
+            <el-table-column prop="destinationId" label="就业状态" width="180">
             </el-table-column>
-            <el-table-column prop="honorArea" label="获得荣誉的地点">
+            <el-table-column prop="detail" label="详情">
             </el-table-column>
             <el-table-column prop="createTime" label="创建时间" show-overflow-tooltip>
             </el-table-column>
@@ -81,6 +84,8 @@ export default {
             pageNum: 1,
             pageSize: 20,
             dialogVisible: false,
+            automobiledestinationIds: [],
+            destinationId: '',
             formData: {
                 honorName: '',
                 honorTime: '',
@@ -112,14 +117,36 @@ export default {
         }
     },
     methods: {
+        getestList () {
+            let that = this;
+            axios
+                .get(
+                    "http://127.0.0.1:9000/pic_lib/destination/destList", {}
+                )
+                .then(res => {
+                    console.log(res.data)
+                    if (res.data.code == 200) {
+                        this.automobiledestinationIds = res.data.data
+                        this.destinationId = res.data.data[0].id
+                        this.getInfoList()
+                    }
+                })
+                .catch(error => {
+                    that.$message({
+                        message: "网络错误,请稍后再试",
+                        type: "error"
+                    });
+                });
+        },
         getInfoList () {
             let that = this;
             axios
                 .get(
-                    "http://127.0.0.1:9000/pic_lib/stu-honor/pageList", {
+                    "http://127.0.0.1:9000/pic_lib/destination/pageList", {
                     params: {
                         pageNum: this.pageNum,
-                        pageSize: this.pageSize
+                        pageSize: this.pageSize,
+                        destinationId: this.destinationId
                     }
                 }
                 )
@@ -140,16 +167,7 @@ export default {
             this.dialogVisible = false
         },
         onClickDialog () {
-            this.title = '新增'
-            this.dialogVisible = true
-            this.formData.honorName = ''
-            this.formData.honorTime = ''
-            this.formData.honorLevel = ''
-            this.formData.honorUser = ''
-            this.formData.issuingAuthority = ''
-            this.formData.honorArea = ''
-            this.formData.id = ''
-            this.dialogVisible = true
+            this.getInfoList()
         },
         onEditClick (row) {
             this.title = '修改'
@@ -214,7 +232,7 @@ export default {
         },
         onDeleteClick (row) {
             let params = {
-                id:row.id
+                id: row.id
             }
             axios
                 .post(
@@ -238,7 +256,7 @@ export default {
     },
     mounted () {
         this.userInfo = this.$store.state.userInfo
-        this.getInfoList()
+        this.getestList()
     }
 }
 </script>
