@@ -50,7 +50,7 @@ export default {
             let that = this;
             axios
                 .get(
-                    "http://10.8.0.216:9000/pic_lib/notice/pageList", {
+                    "http://127.0.0.1:9000/pic_lib/notice/pageList", {
                     params: {
                         pageNum: 1,
                         pageSize: 10

@@ -5,18 +5,18 @@
             <el-button type="primary" @click="onClickDialog">新增</el-button>
         </el-col>
         <el-table :data="tableData" height="calc(100% - 70px)" border style="width: 100%">
-            <el-table-column prop="title" label="公告标题"  width="180">
+            <el-table-column prop="title" label="公告标题" width="180">
             </el-table-column>
             <el-table-column prop="content" label="公告内容">
             </el-table-column>
             <el-table-column label="公告栏图片">
                 <template slot-scope="scope">
                     <!-- <div @click="viewImg(scope.row.imgWebUrl)">查看</div> -->
-                    <img :src="scope.row.imgWebUrl" width="100px" height="100px" style="objct-fit:cover"/>
-                     <!-- <a class="a-style" @click="handlePreView(scope.row)">预览</a> -->
+                    <img :src="scope.row.imgWebUrl" width="100px" height="100px" style="objct-fit:cover" />
+                    <!-- <a class="a-style" @click="handlePreView(scope.row)">预览</a> -->
                 </template>
             </el-table-column>
-            <el-table-column prop="createTime" label="创建时间"  width="180">
+            <el-table-column prop="createTime" label="创建时间" width="180">
             </el-table-column>
             <el-table-column label="操作" width="100px">
                 <template slot-scope="scope">
@@ -207,8 +207,28 @@ export default {
             })
 
         },
-        onDeleteClick () {
+        onDeleteClick (row) {
+            let params = {
+                id: row.id,
+            }
+            axios
+                .post(
+                    "http://127.0.0.1:9000/pic_lib/notice/delete",
+                    params
 
+                )
+                .then(res => {
+                    if (res.data.code == 200) {
+                        this.$message.success(res.data.msg)
+                        this.getInfoList()
+                    }
+                })
+                .catch(error => {
+                    that.$message({
+                        message: "网络错误,请稍后再试",
+                        type: "error"
+                    });
+                });
         },
         submitUpload () {
             this.$refs.upload.submit();
@@ -223,12 +243,12 @@ export default {
             this.currentFile = file
             console.log(file)
         },
-        handlePreView(row) {
-            const imgWebUrl = row.imgUrl ;
-      
-        window.open(imgWebUrl,'_blank')
-     
-      
+        handlePreView (row) {
+            const imgWebUrl = row.imgUrl;
+
+            window.open(imgWebUrl, '_blank')
+
+
         }
     },
     mounted () {
@@ -241,7 +261,7 @@ export default {
 <style>
 .img {
     width: 180px;
-	height: 180px;
+    height: 180px;
 }
 .el-dialog__header {
     border-bottom: solid 1px #eee;
