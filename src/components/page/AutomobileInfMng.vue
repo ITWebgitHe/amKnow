@@ -105,6 +105,61 @@
 
                 </el-form>
             </el-row>
+            <el-row :gutter="20"><el-form :inline="true" :model="filters" label-width="100px" v-if="filters.destinationId == '005'">
+                    <el-col :span="8">
+                        <el-form-item label="地址信息">
+                            <el-input v-model="filters.kgdzxx" placeholder="请输入地址信息"></el-input>
+                        </el-form-item>
+                    </el-col>
+                    <el-col :span="8">
+                        <el-form-item label="考试信息">
+                            <el-input v-model="filters.kgksxx" placeholder="请输入考试信息"></el-input>
+                        </el-form-item>
+                    </el-col>
+                    <el-col :span="8">
+                        <el-form-item label="考试时间">
+                            <el-date-picker v-model="filters.kgkssj" type="date" placeholder="请选择考试时间" style="width:100%" value-format="yyyy-MM-dd">
+                            </el-date-picker>
+                        </el-form-item>
+                    </el-col>
+                    <el-col :span="8">
+                        <el-form-item label="补充信息">
+                            <el-input v-model="filters.kgbcxx" placeholder="请输入补充信息"></el-input>
+                        </el-form-item>
+                    </el-col>
+                </el-form></el-row>
+            <el-row :gutter="20"><el-form :inline="true" :model="filters" label-width="100px" v-if="filters.destinationId == '006'">
+                    <el-col :span="8">
+                        <el-form-item label="一战目标院校">
+                            <el-input v-model="filters.kyyzmbyx" placeholder="请输入一战目标院校"></el-input>
+                        </el-form-item>
+                    </el-col>
+                    <el-col :span="8">
+                        <el-form-item label="一战目标专业">
+                            <el-input v-model="filters.kyyzmbzy" placeholder="请输入一战目标专业"></el-input>
+                        </el-form-item>
+                    </el-col>
+                    <el-col :span="8">
+                        <el-form-item label="一战分数">
+                            <el-input v-model="filters.kyyzfs" placeholder="请输入一战分数"></el-input>
+                        </el-form-item>
+                    </el-col>
+                    <el-col :span="8">
+                        <el-form-item label="二战目标院校">
+                            <el-input v-model="filters.kyezmbyx" placeholder="请输入二战目标院校"></el-input>
+                        </el-form-item>
+                    </el-col>
+                    <el-col :span="8">
+                        <el-form-item label="二战目标专业">
+                            <el-input v-model="filters.kyezmbzy" placeholder="请输入二战目标专业"></el-input>
+                        </el-form-item>
+                    </el-col>
+                    <el-col :span="8">
+                        <el-form-item label="补充信息">
+                            <el-input v-model="filters.kybcxx" placeholder="请输入补充信息"></el-input>
+                        </el-form-item>
+                    </el-col>
+                </el-form></el-row>
             <el-row>
                 <el-col :span="24" style="margin-left:20px">
                     <el-button type="primary" size="small" on="el-icon-search" @click="searchAutomobile">确认提交</el-button>
@@ -140,7 +195,19 @@ export default {
                 kyzy: '',
                 kyfs: '',
                 remark: '',
-                destinationArea: ''
+                destinationArea: '',
+
+                kgdzxx: "",
+                kgksxx: "",
+                kgkssj: "",
+                kgbcxx: "",
+                kyyzmbyx: "",
+                kyyzmbzy: "",
+                kyyzfs: "",
+                kyezmbyx: "",
+                kyezmbzy: "",
+                kybcxx: "",
+
             },
             automobiledestinationIds: [],
             formRules: {
@@ -163,7 +230,7 @@ export default {
             let that = this;
             axios
                 .get(
-                    "http://127.0.0.1:9000/pic_lib/destination/destList", {}
+                    "http://192.168.43.37:9001/pic_lib/destination/destList", {}
                 )
                 .then(res => {
                     console.log(res.data)
@@ -183,7 +250,7 @@ export default {
             let that = this;
             axios
                 .get(
-                    "http://127.0.0.1:9000/pic_lib//user/userInfo", {
+                    "http://192.168.43.37:9001/pic_lib//user/userInfo", {
                     params: {
                         id: this.userInfo.id
                     }
@@ -196,7 +263,7 @@ export default {
                         this.filters.xsxh = this.userInfo.stuNum
                         this.filters.sjh = this.userInfo.phone
                         this.filters.username = this.userInfo.name
-                          this.$store.dispatch('setUserInfo', res.data.data);
+                        this.$store.dispatch('setUserInfo', res.data.data);
                     }
                 })
                 .catch(error => {
@@ -210,7 +277,7 @@ export default {
             let that = this;
             axios
                 .get(
-                    "http://127.0.0.1:9000/pic_lib/destination/destDetail", {
+                    "http://192.168.43.37:9001/pic_lib/destination/destDetail", {
                     params: {
                         userId: that.userInfo.id,
                     }
@@ -231,6 +298,18 @@ export default {
                         this.filters.kyzy = result.map.kyzy
                         this.filters.kyfs = result.map.kyfs
                         this.filters.remark = result.map.bz
+
+                        this.filters.kgdzxx = result.kgdzxx,
+                            this.filters.kgks = result.kgks,
+                            this.filters.kgkssj = result.kgkssj,
+                            this.filters.kgbcxx = result.kgbcxx,
+                            this.filters.kyyzmbyx = result.kyyzmbyx
+                            this.filters.kgksxx = result.kgksxx
+                        this.filters.kyyzmbzy = result.kyyzmbzy
+                        this.filters.kyyzfs = result.kyyzfs
+                        this.filters.kyezmbyx = result.kyezmbyx
+                        this.filters.kyezmbzy = result.kyezmbzy
+                        this.filters.kybcxx = result.kybcxx
                         this.filters.destinationId = result.destinationId
                         this.filters.destinationArea = result.destinationArea
                     }
@@ -261,7 +340,19 @@ export default {
 
             } else if (this.filters.destinationId == '004') {
                 map.remark = this.filters.remark
+            } else if (this.filters.destinationId == '005') {
+                map.kgdzxx = this.filters.kgdzxx
+                map.kgksxx = this.filters.kgksxx
+                map.kgkssj = this.filters.kgkssj
+                map.kgbcxx = this.filters.kgbcxx
 
+            } else if (this.filters.destinationId == '006') {
+                map.kyyzmbyx = this.filters.kyyzmbyx
+                map.kyyzmbzy = this.filters.kyyzmbzy
+                map.kyyzfs = this.filters.kyyzfs
+                map.kyezmbyx = this.filters.kyezmbyx
+                map.kyezmbzy = this.filters.kyezmbzy
+                map.kybcxx = this.filters.kybcxx
             }
             let params = {
                 userId: this.userInfo.id,
@@ -272,7 +363,7 @@ export default {
 
             axios
                 .post(
-                    "http://127.0.0.1:9000/pic_lib/destination/insert",
+                    "http://192.168.43.37:9001/pic_lib/destination/insert",
                     params
 
                 )

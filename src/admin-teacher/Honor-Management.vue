@@ -116,7 +116,7 @@ export default {
             let that = this;
             axios
                 .get(
-                    "http://127.0.0.1:9000/pic_lib/stu-honor/pageList", {
+                    "http://192.168.43.37:9001/pic_lib/stu-honor/pageList", {
                     params: {
                         pageNum: this.pageNum,
                         pageSize: this.pageSize
@@ -172,7 +172,7 @@ export default {
                     if (this.title == '修改') {
                         axios
                             .post(
-                                "http://127.0.0.1:9000/pic_lib/stu-honor/update", params)
+                                "http://192.168.43.37:9001/pic_lib/stu-honor/update", params)
                             .then(res => {
                                 console.log(res.data)
                                 if (res.data.code == 200) {
@@ -191,7 +191,7 @@ export default {
                     } else {
                         axios
                             .post(
-                                "http://127.0.0.1:9000/pic_lib/stu-honor/insert", params)
+                                "http://192.168.43.37:9001/pic_lib/stu-honor/insert", params)
                             .then(res => {
                                 console.log(res.data)
                                 if (res.data.code == 200) {
@@ -218,7 +218,7 @@ export default {
             }
             axios
                 .post(
-                    "http://127.0.0.1:9000/pic_lib//stu-honor/delete", params)
+                    "http://192.168.43.37:9001/pic_lib//stu-honor/delete", params)
                 .then(res => {
                     console.log(res.data)
                     if (res.data.code == 200) {

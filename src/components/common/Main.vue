@@ -11,10 +11,11 @@
     </el-col> -->
     <el-col :span="24" class="content-wrapper">
       <transition name="fade" mode="out-in">
-        <keep-alive>
+        <!-- <keep-alive>
           <router-view v-if="$route.meta.keepAlive"></router-view>
-        </keep-alive>
-        <router-view v-if="!$route.meta.keepAlive"></router-view>
+        </keep-alive> -->
+        <!-- <router-view v-if="!$route.meta.keepAlive"></router-view> -->
+        <router-view></router-view>
       </transition>
     </el-col>
   </div>

@@ -55,7 +55,7 @@ export default {
                     let that = this;
                     axios
                         .get(
-                            "http://127.0.0.1:9000/pic_lib/login/loginIn", {
+                            "http://192.168.43.37:9001/pic_lib/login/loginIn", {
                             params: {
                                 username: this.formData.username,
                                 password: this.formData.password
@@ -68,7 +68,12 @@ export default {
                                 this.userInfo = res.data.data
                                 this.$store.dispatch('setUserInfo', res.data.data);
                                 this.initMenus()
-                                this.$router.push({ path: "Index" });
+                                if(this.userInfo.userType == '1') {
+                                    this.$router.push({ path: "Index" });
+                                }else {
+                                    this.$router.push({ path: "echartsBar" });
+                                }
+                                
                                 sessionStorage.setItem("userInfo", JSON.stringify(res.data.data));
                             } else if (res.data.code == '500') {
                                 this.$message({
@@ -103,7 +108,7 @@ export default {
                         id: "SY",
                         name: "主页",
                         icon: "icon iconfont icon-box",
-                        path: "Index"
+                        path: "echartsBar"
                     },
                 },
                 {
@@ -236,7 +241,7 @@ export default {
         //             let that = this;
         //             axios
         //                 .get(
-        //                     "http://127.0.0.1:9000/pic_lib/login/register", {
+        //                     "http://192.168.43.37:9001/pic_lib/login/register", {
         //                         params: {
         //                             username: this.formData.username,
         //                             password: this.formData.password

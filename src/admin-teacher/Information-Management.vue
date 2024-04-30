@@ -17,14 +17,17 @@
             </el-table-column>
             <el-table-column prop="age" label="年龄">
             </el-table-column>
-            <el-table-column prop="address" label="家庭地址" width="300">
+             <el-table-column prop="faculty" label="专业">
+            </el-table-column>
+            <el-table-column prop="className" label="班级">
             </el-table-column>
             <el-table-column prop="stuNum" label="学生号">
             </el-table-column>
-            <el-table-column prop="idCard" label="身份证号">
-            </el-table-column>
             <el-table-column prop="phone" label="手机号">
             </el-table-column>
+            <el-table-column prop="address" label="家庭地址" width="300">
+            </el-table-column>
+            
             <!-- <el-table-column prop="address" label="院系信息备注">
         </el-table-column> -->
             <el-table-column label="操作" width="100px">
@@ -68,7 +71,7 @@ export default {
                 username: '',
                 password: ''
             },
-            action: 'http://127.0.0.1:9000/pic_lib/user/importUserInfo',
+            action: 'http://192.168.43.37:9001/pic_lib/user/importUserInfo',
             formRules: {
                 username: [
                     { required: true, message: "请输入用户名", trigger: "blur" }
@@ -82,7 +85,7 @@ export default {
             let that = this;
             axios
                 .get(
-                    "http://127.0.0.1:9000/pic_lib/user/pageList", {
+                    "http://192.168.43.37:9001/pic_lib/user/pageList", {
                     params: {
 
                         pageNum: this.pageNum,
@@ -106,7 +109,7 @@ export default {
         onDeleteUser () {
             axios
                 .get(
-                    "http://127.0.0.1:9000/pic_lib/user/delete", {
+                    "http://192.168.43.37:9001/pic_lib/user/delete", {
                     params: {
 
                     }
@@ -142,7 +145,7 @@ export default {
                     }
                     axios
                         .post(
-                            "http://127.0.0.1:9000/pic_lib/user/insert",
+                            "http://192.168.43.37:9001/pic_lib/user/insert",
                             params
 
                         )

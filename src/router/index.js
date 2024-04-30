@@ -122,6 +122,14 @@ export default new Router({
                         keepAlive: true // 需要缓存
                     },
                 },
+                {
+                    path: 'echartsBar', // 统计图
+                    name: 'echartsBar',
+                    component: resolve => require(['@/admin-teacher/echarts-bar.vue'], resolve),
+                    meta: {
+                        keepAlive: false // 需要缓存
+                    },
+                },
             ]
         },
         {

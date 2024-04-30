@@ -7,59 +7,85 @@
         </div>
         <div style="margin-top:10px">
             <el-form :model="ruleForm" :rules="rules" ref="formName" label-width="100px" class="demo-ruleForm">
-                <el-form-item label="密码" prop="password">
-                    <el-input placeholder="请输入密码" v-model="ruleForm.password" style="width:384px" type="password"></el-input>
-                </el-form-item>
-                <el-form-item label="真实姓名" prop="name">
-                    <el-input v-model="ruleForm.name" style="width:384px"></el-input>
-                </el-form-item>
-                <el-form-item label="身份证号" prop="idCard">
-                    <el-input v-model="ruleForm.idCard" style="width:384px"></el-input>
-                </el-form-item>
-                <el-form-item label="年龄" prop="age">
-                    <!-- <el-input v-model="ruleForm.age" ></el-input> -->
-                    <el-input-number v-model="ruleForm.age" controls-position="right" :min="1" :max="100" style="width:384px"></el-input-number>
-                </el-form-item>
+                <el-row>
+                    <el-col :span="8"><el-form-item label="真实姓名" prop="name">
+                            <el-input v-model="ruleForm.name" style="width:384px"></el-input>
+                        </el-form-item></el-col>
+                    <el-col :span="8"><el-form-item label="密码" prop="password">
+                            <el-input placeholder="请输入密码" v-model="ruleForm.password" style="width:384px" type="password"></el-input>
+                        </el-form-item></el-col>
 
-                <el-form-item label="学生证号" prop="stuNum">
-                    <el-input v-model="ruleForm.stuNum" style="width:384px"></el-input>
-                </el-form-item>
-                <el-form-item label="手机号" prop="phone">
-                    <el-input v-model="ruleForm.phone" style="width:384px"></el-input>
-                </el-form-item>
-                <el-form-item label="性别" prop="sex">
-                    <el-radio-group v-model="ruleForm.sex">
-                        <el-radio label="男"></el-radio>
-                        <el-radio label="女"></el-radio>
-                    </el-radio-group>
-                </el-form-item>
-                <el-form-item label="现居住地" prop="delivery">
-                    <el-col :span="6">
-                        <el-form-item prop="province">
-                            <el-select v-model="ruleForm.province" placeholder="请选择" style="width:100%">
-                                <el-option v-for="(item,index) in provinceList" :key="item.value" :label="item.label" :value="item.value" @click.native="bindProvinceChange(index)">
+                    <el-col :span="8"><el-form-item label="年龄" prop="age">
+                            <!-- <el-input v-model="ruleForm.age" ></el-input> -->
+                            <el-input-number v-model="ruleForm.age" controls-position="right" :min="1" :max="100" style="width:384px"></el-input-number>
+                        </el-form-item></el-col>
+                </el-row>
+
+                <el-row>
+                    <el-col :span="8"><el-form-item label="性别" prop="sex">
+                            <el-radio-group v-model="ruleForm.sex">
+                                <el-radio label="男"></el-radio>
+                                <el-radio label="女"></el-radio>
+                            </el-radio-group>
+                        </el-form-item></el-col>
+                    <el-col :span="8"><el-form-item label="学生证号" prop="stuNum">
+                            <el-input v-model="ruleForm.stuNum" style="width:384px"></el-input>
+                        </el-form-item></el-col>
+                    <el-col :span="8"><el-form-item label="手机号" prop="phone">
+                            <el-input v-model="ruleForm.phone" style="width:384px"></el-input>
+                        </el-form-item></el-col>
+                </el-row>
+                <el-row>
+                    <el-col :span="8">
+                        <el-form-item label="专业" prop="faculty">
+                            <el-select v-model="ruleForm.faculty" placeholder="请选择" style="width:384px" @change="changefaculty()">
+                                <el-option v-for="(item,index) in facultyList" :key="index" :label="item.faculty" :value="item.faculty" >
                                 </el-option>
                             </el-select>
                         </el-form-item>
                     </el-col>
-                    <el-col :span="6" style="margin-left:10px">
-                        <el-form-item prop="city">
-                            <el-select v-model="ruleForm.city" placeholder="请选择" style="width:100%">
-                                <el-option v-for="(item,index) in cityList" :key="item.value" :label="item.label" :value="item.value" @click.native="bindCityChange(index)">
+                    <el-col :span="8">
+                        <el-form-item label="班级" prop="className">
+                            <el-select v-model="ruleForm.className" placeholder="请选择" style="width:384px">
+                                <el-option v-for="(item,index) in classList" :key="index" :label="item.className" :value="item.className">
                                 </el-option>
                             </el-select>
                         </el-form-item>
                     </el-col>
-                    <el-col :span="6" style="margin-left:10px">
-                        <el-form-item prop="county">
-                            <el-select v-model="ruleForm.county" placeholder="请选择" style="width:100%">
-                                <el-option v-for="item in countyList" :key="item.value" :label="item.label" :value="item.value" @click.native="bindCountyChange(item.label)">
-                                </el-option>
-                            </el-select>
-                        </el-form-item>
-                    </el-col>
-                </el-form-item>
-                <el-form-item label="院系信息" prop="remark">
+
+                </el-row>
+                <el-row>
+
+                    <el-col :span="8"><el-form-item label="现居住地" prop="delivery">
+                            <el-col :span="6">
+                                <el-form-item prop="province">
+                                    <el-select v-model="ruleForm.province" placeholder="请选择" style="width:100%">
+                                        <el-option v-for="(item,index) in provinceList" :key="item.value" :label="item.label" :value="item.value" @click.native="bindProvinceChange(index)">
+                                        </el-option>
+                                    </el-select>
+                                </el-form-item>
+                            </el-col>
+                            <el-col :span="6" style="margin-left:10px">
+                                <el-form-item prop="city">
+                                    <el-select v-model="ruleForm.city" placeholder="请选择" style="width:100%">
+                                        <el-option v-for="(item,index) in cityList" :key="item.value" :label="item.label" :value="item.value" @click.native="bindCityChange(index)">
+                                        </el-option>
+                                    </el-select>
+                                </el-form-item>
+                            </el-col>
+                            <el-col :span="6" style="margin-left:10px">
+                                <el-form-item prop="county">
+                                    <el-select v-model="ruleForm.county" placeholder="请选择" style="width:100%">
+                                        <el-option v-for="item in countyList" :key="item.value" :label="item.label" :value="item.value" @click.native="bindCountyChange(item.label)">
+                                        </el-option>
+                                    </el-select>
+                                </el-form-item>
+                            </el-col>
+                        </el-form-item></el-col>
+                    <el-col :span="8"></el-col>
+                </el-row>
+
+                <el-form-item label="备注" prop="remark">
                     <el-input v-model="ruleForm.remark" style="width:384px" type="textarea" :row="2"></el-input>
                 </el-form-item>
                 <el-form-item>
@@ -95,7 +121,9 @@ export default {
                 provinceName: '',
                 cityName: '',
                 countyName: '',
-                remark:''
+                remark: '',
+                faculty:'',
+                className:''
 
             },
             rules: {
@@ -130,7 +158,9 @@ export default {
             provinceList: '',
             cityList: [],
             countyList: [],
-            userInfo: {}
+            userInfo: {},
+            classList: [],
+            facultyList:[]
         };
     },
 
@@ -167,7 +197,7 @@ export default {
                     if (this.$route.query.isEdit) {
                         axios
                             .post(
-                                "http://127.0.0.1:9000/pic_lib/user/update",
+                                "http://192.168.43.37:9001/pic_lib/user/update",
                                 params
 
                             )
@@ -186,7 +216,7 @@ export default {
                     }
                     axios
                         .post(
-                            "http://127.0.0.1:9000/pic_lib/user/insert",
+                            "http://192.168.43.37:9001/pic_lib/user/insert",
                             params
 
                         )
@@ -215,7 +245,7 @@ export default {
             let that = this;
             axios
                 .get(
-                    "http://127.0.0.1:9000/pic_lib/user/userInfo", {
+                    "http://192.168.43.37:9001/pic_lib/user/userInfo", {
                     params: {
                         id: this.$store.state.userInfo.id,
                     }
@@ -234,17 +264,19 @@ export default {
                         this.ruleForm.province = this.userInfo.province
                         this.ruleForm.stuNum = this.userInfo.stuNum
                         this.ruleForm.phone = this.userInfo.phone
+                        this.ruleForm.faculty = this.userInfo.faculty
+                        this.ruleForm.className = this.userInfo.className
                         for (let item of this.provinceList) {
                             if (item.value == this.userInfo.province) {
                                 this.cityList = item.city
                             }
-                            
+
                         }
                         for (let item of this.cityList) {
-                                if (item.value == this.userInfo.city) {
-                                    this.countyList = item.area
-                                }
+                            if (item.value == this.userInfo.city) {
+                                this.countyList = item.area
                             }
+                        }
                         this.ruleForm.city = this.userInfo.city
                         this.ruleForm.county = this.userInfo.county
                         this.ruleForm.remark = this.userInfo.remark
@@ -256,6 +288,31 @@ export default {
                         type: "error"
                     });
                 });
+        },
+        getClssList () {
+            let that = this;
+            axios
+                .get(
+                    "http://192.168.43.37:9001/pic_lib/faculty-class/list", {})
+                .then(res => {
+                    console.log(res.data)
+                    if (res.data.code == 200) {
+                        this.facultyList = res.data.data
+                    }
+                })
+                .catch(error => {
+                    that.$message({
+                        message: "网络错误,请稍后再试",
+                        type: "error"
+                    });
+                });
+        },
+        changefaculty() {
+            for(let item of this.facultyList) {
+                if(item.faculty == this.ruleForm.faculty) {
+                    this.classList = item.classList
+                }
+            }
         }
 
 
@@ -263,6 +320,7 @@ export default {
     mounted: function () {
         this.provinceList = JSON.parse(JSON.stringify(products))
         this.getUserInfo()
+        this.getClssList()
     }
 };
 </script>

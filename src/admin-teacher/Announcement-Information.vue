@@ -104,7 +104,7 @@ export default {
             let that = this;
             axios
                 .get(
-                    "http://127.0.0.1:9000/pic_lib/notice/pageList", {
+                    "http://192.168.43.37:9001/pic_lib/notice/pageList", {
                     params: {
                         pageNum: this.pageNum,
                         pageSize: this.pageSize
@@ -167,7 +167,7 @@ export default {
                     if (this.title == '修改') {
                         axios
                             .post(
-                                "http://127.0.0.1:9000/pic_lib/notice/update", formData)
+                                "http://192.168.43.37:9001/pic_lib/notice/update", formData)
                             .then(res => {
                                 console.log(res.data)
                                 if (res.data.code == '200') {
@@ -186,7 +186,7 @@ export default {
                     } else {
                         axios
                             .post(
-                                "http://127.0.0.1:9000/pic_lib/notice/insert", formData)
+                                "http://192.168.43.37:9001/pic_lib/notice/insert", formData)
                             .then(res => {
                                 console.log(res.data)
                                 if (res.data.code == 200) {
@@ -213,7 +213,7 @@ export default {
             }
             axios
                 .post(
-                    "http://127.0.0.1:9000/pic_lib/notice/delete",
+                    "http://192.168.43.37:9001/pic_lib/notice/delete",
                     params
 
                 )

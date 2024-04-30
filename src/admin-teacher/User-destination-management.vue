@@ -1,16 +1,52 @@
 // 用户去向管理
 <template>
     <div style="height:100%">
-        <el-col :span="24" class="toolbar" style="padding-bottom: 0px;background:none">
-            <el-select v-model="destinationId" placeholder="请选择">
-                <el-option v-for="item in automobiledestinationIds" :key="item.id" :label="item.type" :value="item.id"></el-option>
+        <!-- <el-col :span="24" class="toolbar" style="padding-bottom: 0px;background:none">
+            <label style="margin-right:8px">去向类型</label>
+            
+            <label style="margin-right:8px">班级</label>
+            <el-select v-model="faculty" placeholder="请选择" @change="changefaculty()">
+                <el-option v-for="(item,index) in facultyList" :key="index" :label="item.faculty" :value="item.faculty">
+                </el-option>
             </el-select>
-            <el-button type="primary" @click="onClickDialog">查询</el-button>
-        </el-col>
+            <label style="margin-right:8px">专业</label>
+            
+            
+        </el-col> -->
+
+        <el-form :inline="true" :model="formInline" class="demo-form-inline" label-width="100px">
+            <el-form-item label="去向类型">
+                <el-select v-model="formInline.destinationId" placeholder="请选择" clearable>
+                    <el-option v-for="item in automobiledestinationIds" :key="item.id" :label="item.type" :value="item.id"></el-option>
+                </el-select>
+            </el-form-item>
+
+            <el-form-item label="专业">
+                <el-select v-model="formInline.faculty" placeholder="请选择" @change="changefaculty()">
+                    <el-option v-for="(item,index) in facultyList" :key="index" :label="item.faculty" :value="item.faculty">
+                    </el-option>
+                </el-select>
+
+            </el-form-item>
+            <el-form-item label="班级">
+                <el-select v-model="formInline.className" placeholder="请选择">
+                    <el-option v-for="(item,index) in classList" :key="index" :label="item.className" :value="item.className">
+                    </el-option>
+                </el-select>
+            </el-form-item>
+            <el-form-item>
+                <el-button type="primary" @click="onClickDialog" style="margin-left:8px">查询</el-button>
+                <el-button type="primary" @click="onExport" style="margin-left:8px">导出</el-button>
+            </el-form-item>
+        </el-form>
         <el-table :data="tableData" height="100%" border style="width: 100%">
             <el-table-column prop="name" label="学生姓名">
             </el-table-column>
             <el-table-column prop="stuNum" label="学生学号" width="180">
+            </el-table-column>
+            <el-table-column prop="faculty" label="专业">
+            </el-table-column>
+            <el-table-column prop="className" label="班级">
             </el-table-column>
             <el-table-column prop="phone" label="学生手机号">
             </el-table-column>
@@ -22,15 +58,6 @@
             </el-table-column>
             <el-table-column prop="createTime" label="创建时间" show-overflow-tooltip>
             </el-table-column>
-            <!-- <el-table-column label="操作" width="100px">
-
-                <template slot-scope="scope">
-                    <div class="flex align-center">
-                        <i class="el-icon-edit" style="font-size:18px;cursor:pointer" @click="onEditClick(scope.row)"></i>
-                        <i class="el-icon-delete" style="padding-left:10px;font-size:18px" @click="onDeleteClick(scope.row)"></i>
-                    </div>
-                </template>
-            </el-table-column> -->
         </el-table>
         <el-dialog :title="title" :visible.sync="dialogVisible" width="50%" :before-close="handleClose" label-width="80px">
             <div style="">
@@ -85,7 +112,12 @@ export default {
             pageSize: 20,
             dialogVisible: false,
             automobiledestinationIds: [],
-            destinationId: '',
+            formInline: {
+                destinationId: '',
+                faculty: '',
+                className: '',
+            },
+
             formData: {
                 honorName: '',
                 honorTime: '',
@@ -95,6 +127,8 @@ export default {
                 honorArea: '',
                 id: ''
             },
+            classList: [],
+            facultyList: [],
             formRules: {
                 honorName: [
                     { required: true, message: "请输入荣誉名称", trigger: "blur" }
@@ -121,13 +155,13 @@ export default {
             let that = this;
             axios
                 .get(
-                    "http://127.0.0.1:9000/pic_lib/destination/destList", {}
+                    "http://192.168.43.37:9001/pic_lib/destination/destList", {}
                 )
                 .then(res => {
                     console.log(res.data)
                     if (res.data.code == 200) {
                         this.automobiledestinationIds = res.data.data
-                        this.destinationId = res.data.data[0].id
+                        // this.destinationId = res.data.data[0].id
                         this.getInfoList()
                     }
                 })
@@ -138,22 +172,49 @@ export default {
                     });
                 });
         },
+        getClssList () {
+            let that = this;
+            axios
+                .get(
+                    "http://192.168.43.37:9001/pic_lib/faculty-class/list", {})
+                .then(res => {
+                    console.log(res.data)
+                    if (res.data.code == 200) {
+                        this.facultyList = res.data.data
+                    }
+                })
+                .catch(error => {
+                    that.$message({
+                        message: "网络错误,请稍后再试",
+                        type: "error"
+                    });
+                });
+        },
+        changefaculty () {
+            for (let item of this.facultyList) {
+                if (item.faculty == this.formInline.faculty) {
+                    this.classList = item.classList
+                }
+            }
+        },
         getInfoList () {
             let that = this;
             axios
                 .get(
-                    "http://127.0.0.1:9000/pic_lib/destination/pageList", {
+                    "http://192.168.43.37:9001/pic_lib/destination/pageList", {
                     params: {
                         pageNum: this.pageNum,
                         pageSize: this.pageSize,
-                        destinationId: this.destinationId
+                        destinationId: this.formInline.destinationId,
+                        faculty: this.formInline.faculty,
+                        className: this.formInline.className,
                     }
                 }
                 )
                 .then(res => {
                     console.log(res.data)
                     if (res.data.code == 200) {
-                        this.tableData = res.data.data.list
+                        this.tableData = res.data.data
                     }
                 })
                 .catch(error => {
@@ -168,6 +229,9 @@ export default {
         },
         onClickDialog () {
             this.getInfoList()
+        },
+        onExport() {
+
         },
         onEditClick (row) {
             this.title = '修改'
@@ -190,7 +254,7 @@ export default {
                     if (this.title == '修改') {
                         axios
                             .post(
-                                "http://127.0.0.1:9000/pic_lib/stu-honor/update", params)
+                                "http://192.168.43.37:9001/pic_lib/stu-honor/update", params)
                             .then(res => {
                                 console.log(res.data)
                                 if (res.data.code == 200) {
@@ -209,7 +273,7 @@ export default {
                     } else {
                         axios
                             .post(
-                                "http://127.0.0.1:9000/pic_lib/stu-honor/insert", params)
+                                "http://192.168.43.37:9001/pic_lib/stu-honor/insert", params)
                             .then(res => {
                                 console.log(res.data)
                                 if (res.data.code == 200) {
@@ -236,7 +300,7 @@ export default {
             }
             axios
                 .post(
-                    "http://127.0.0.1:9000/pic_lib//stu-honor/delete", params)
+                    "http://192.168.43.37:9001/pic_lib//stu-honor/delete", params)
                 .then(res => {
                     console.log(res.data)
                     if (res.data.code == 200) {
@@ -257,6 +321,7 @@ export default {
     mounted () {
         this.userInfo = this.$store.state.userInfo
         this.getestList()
+        this.getClssList()
     }
 }
 </script>
