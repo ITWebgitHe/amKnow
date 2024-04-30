@@ -39,7 +39,7 @@
                 <el-button type="primary" @click="onExport" style="margin-left:8px">导出</el-button>
             </el-form-item>
         </el-form>
-        <el-table :data="tableData" height="100%" border style="width: 100%">
+        <el-table :data="tableData" height="calc(100% - 50px)" border style="width: 100%">
             <el-table-column prop="name" label="学生姓名">
             </el-table-column>
             <el-table-column prop="stuNum" label="学生学号" width="180">
