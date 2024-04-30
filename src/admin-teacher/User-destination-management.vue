@@ -230,8 +230,22 @@ export default {
         onClickDialog () {
             this.getInfoList()
         },
-        onExport() {
-
+        onExport () {
+            axios
+                .post(
+                    "http://192.168.43.37:9001/pic_lib/destination/exportDestination", '')
+                .then(res => {
+                    console.log(res.data)
+                    if (res.data.code == 200) {
+                        this.$message.success('导出成功')
+                    }
+                })
+                .catch(error => {
+                    that.$message({
+                        message: "网络错误,请稍后再试",
+                        type: "error"
+                    });
+                });
         },
         onEditClick (row) {
             this.title = '修改'
