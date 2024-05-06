@@ -197,7 +197,7 @@ export default {
                     if (this.$route.query.isEdit) {
                         axios
                             .post(
-                                "http://192.168.43.37:9001/pic_lib/user/update",
+                                "http://127.0.0.1:9000/pic_lib/user/update",
                                 params
 
                             )
@@ -216,7 +216,7 @@ export default {
                     }
                     axios
                         .post(
-                            "http://192.168.43.37:9001/pic_lib/user/insert",
+                            "http://127.0.0.1:9000/pic_lib/user/insert",
                             params
 
                         )
@@ -245,7 +245,7 @@ export default {
             let that = this;
             axios
                 .get(
-                    "http://192.168.43.37:9001/pic_lib/user/userInfo", {
+                    "http://127.0.0.1:9000/pic_lib/user/userInfo", {
                     params: {
                         id: this.$store.state.userInfo.id,
                     }
@@ -293,7 +293,7 @@ export default {
             let that = this;
             axios
                 .get(
-                    "http://192.168.43.37:9001/pic_lib/faculty-class/list", {})
+                    "http://127.0.0.1:9000/pic_lib/faculty-class/list", {})
                 .then(res => {
                     console.log(res.data)
                     if (res.data.code == 200) {

@@ -230,7 +230,7 @@ export default {
             let that = this;
             axios
                 .get(
-                    "http://192.168.43.37:9001/pic_lib/destination/destList", {}
+                    "http://127.0.0.1:9000/pic_lib/destination/destList", {}
                 )
                 .then(res => {
                     console.log(res.data)
@@ -250,7 +250,7 @@ export default {
             let that = this;
             axios
                 .get(
-                    "http://192.168.43.37:9001/pic_lib//user/userInfo", {
+                    "http://127.0.0.1:9000/pic_lib//user/userInfo", {
                     params: {
                         id: this.userInfo.id
                     }
@@ -277,7 +277,7 @@ export default {
             let that = this;
             axios
                 .get(
-                    "http://192.168.43.37:9001/pic_lib/destination/destDetail", {
+                    "http://127.0.0.1:9000/pic_lib/destination/destDetail", {
                     params: {
                         userId: that.userInfo.id,
                     }
@@ -363,7 +363,7 @@ export default {
 
             axios
                 .post(
-                    "http://192.168.43.37:9001/pic_lib/destination/insert",
+                    "http://127.0.0.1:9000/pic_lib/destination/insert",
                     params
 
                 )

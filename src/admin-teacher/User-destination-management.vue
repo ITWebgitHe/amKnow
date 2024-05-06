@@ -155,7 +155,7 @@ export default {
             let that = this;
             axios
                 .get(
-                    "http://192.168.43.37:9001/pic_lib/destination/destList", {}
+                    "http://127.0.0.1:9000/pic_lib/destination/destList", {}
                 )
                 .then(res => {
                     console.log(res.data)
@@ -176,7 +176,7 @@ export default {
             let that = this;
             axios
                 .get(
-                    "http://192.168.43.37:9001/pic_lib/faculty-class/list", {})
+                    "http://127.0.0.1:9000/pic_lib/faculty-class/list", {})
                 .then(res => {
                     console.log(res.data)
                     if (res.data.code == 200) {
@@ -201,7 +201,7 @@ export default {
             let that = this;
             axios
                 .get(
-                    "http://192.168.43.37:9001/pic_lib/destination/pageList", {
+                    "http://127.0.0.1:9000/pic_lib/destination/pageList", {
                     params: {
                         pageNum: this.pageNum,
                         pageSize: this.pageSize,
@@ -233,7 +233,7 @@ export default {
         onExport () {
             axios
                 .post(
-                    "http://192.168.43.37:9001/pic_lib/destination/exportDestination", '')
+                    "http://127.0.0.1:9000/pic_lib/destination/exportDestination", '')
                 .then(res => {
                     console.log(res.data)
                     if (res.data.code == 200) {
@@ -268,7 +268,7 @@ export default {
                     if (this.title == '修改') {
                         axios
                             .post(
-                                "http://192.168.43.37:9001/pic_lib/stu-honor/update", params)
+                                "http://127.0.0.1:9000/pic_lib/stu-honor/update", params)
                             .then(res => {
                                 console.log(res.data)
                                 if (res.data.code == 200) {
@@ -287,7 +287,7 @@ export default {
                     } else {
                         axios
                             .post(
-                                "http://192.168.43.37:9001/pic_lib/stu-honor/insert", params)
+                                "http://127.0.0.1:9000/pic_lib/stu-honor/insert", params)
                             .then(res => {
                                 console.log(res.data)
                                 if (res.data.code == 200) {
@@ -314,7 +314,7 @@ export default {
             }
             axios
                 .post(
-                    "http://192.168.43.37:9001/pic_lib//stu-honor/delete", params)
+                    "http://127.0.0.1:9000/pic_lib//stu-honor/delete", params)
                 .then(res => {
                     console.log(res.data)
                     if (res.data.code == 200) {

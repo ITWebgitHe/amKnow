@@ -55,7 +55,7 @@ export default {
                     let that = this;
                     axios
                         .get(
-                            "http://192.168.43.37:9001/pic_lib/login/loginIn", {
+                            "http://127.0.0.1:9000/pic_lib/login/loginIn", {
                             params: {
                                 username: this.formData.username,
                                 password: this.formData.password
@@ -241,7 +241,7 @@ export default {
         //             let that = this;
         //             axios
         //                 .get(
-        //                     "http://192.168.43.37:9001/pic_lib/login/register", {
+        //                     "http://127.0.0.1:9000/pic_lib/login/register", {
         //                         params: {
         //                             username: this.formData.username,
         //                             password: this.formData.password

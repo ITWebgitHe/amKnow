@@ -13,14 +13,14 @@
             </el-col>
             <el-col :span="12">
                 <div class="grid-content bg-purple">
-                    <div id="echarts2"  style="width:100%;height:100%"></div>
+                    <div id="echarts2" style="width:100%;height:100%"></div>
                 </div>
             </el-col>
         </el-row>
         <el-row :gutter="20">
             <el-col :span="12">
                 <div class="grid-content bg-purple">
-                    <div id="echarts3"  style="width:100%;height:100%"></div>
+                    <div id="echarts3" style="width:100%;height:100%"></div>
                 </div>
             </el-col>
             <el-col :span="12">
@@ -50,7 +50,7 @@ export default {
                 },
                 series: [
                     {
-                        name: 'Access From',
+                        name: '去向类型',
                         type: 'pie',
                         radius: ['40%', '70%'],
                         avoidLabelOverlap: false,
@@ -81,7 +81,18 @@ export default {
                             { value: 300, name: 'Video Ads' }
                         ]
                     }
-                ]
+                ],
+                graphic: {
+                    type: 'text',
+                    left: 'center', // 文字居中
+                    top: 'center', // 文字居中
+                    style: {
+                        text: '全院', // 显示的文字
+                        textAlign: 'center',
+                        fill: '#000', // 文字颜色
+                        fontSize: 20
+                    }
+                }
             },
             pieOption2: {
                 tooltip: {
@@ -93,7 +104,7 @@ export default {
                 },
                 series: [
                     {
-                        name: 'Access From',
+                        name: '去向类型',
                         type: 'pie',
                         radius: ['40%', '70%'],
                         avoidLabelOverlap: false,
@@ -124,7 +135,18 @@ export default {
                             { value: 300, name: 'Video Ads' }
                         ]
                     }
-                ]
+                ],
+                graphic: {
+                    type: 'text',
+                    left: 'center', // 文字居中
+                    top: 'center', // 文字居中
+                    style: {
+                        text: '网络工程', // 显示的文字
+                        textAlign: 'center',
+                        fill: '#000', // 文字颜色
+                        fontSize: 20
+                    }
+                }
             },
             pieOption3: {
                 tooltip: {
@@ -136,7 +158,7 @@ export default {
                 },
                 series: [
                     {
-                        name: 'Access From',
+                        name: '去向类型',
                         type: 'pie',
                         radius: ['40%', '70%'],
                         avoidLabelOverlap: false,
@@ -167,7 +189,18 @@ export default {
                             { value: 300, name: 'Video Ads' }
                         ]
                     }
-                ]
+                ],
+                graphic: {
+                    type: 'text',
+                    left: 'center', // 文字居中
+                    top: 'center', // 文字居中
+                    style: {
+                        text: '软件工程', // 显示的文字
+                        textAlign: 'center',
+                        fill: '#000', // 文字颜色
+                        fontSize: 20
+                    }
+                }
             },
             pieOption4: {
                 tooltip: {
@@ -179,7 +212,7 @@ export default {
                 },
                 series: [
                     {
-                        name: 'Access From',
+                        name: '去向类型',
                         type: 'pie',
                         radius: ['40%', '70%'],
                         avoidLabelOverlap: false,
@@ -210,32 +243,68 @@ export default {
                             { value: 300, name: 'Video Ads' }
                         ]
                     }
-                ]
+                ],
+                graphic: {
+                    type: 'text',
+                    left: 'center', // 文字居中
+                    top: 'center', // 文字居中
+                    style: {
+                        text: '计算机科学与技术', // 显示的文字
+                        textAlign: 'center',
+                        fill: '#000', // 文字颜色
+                        fontSize: 20
+                    }
+                }
             },
         }
 
     },
     mounted () {
         this.getestList()
-        this.$nextTick(()=>{
-            this.drawPieChart1()
-            this.drawPieChart2()
-            this.drawPieChart3()
-            this.drawPieChart4()
-        })
+        this.getDataList()
+
     },
     methods: {
         getestList () {
             let that = this;
             axios
                 .get(
-                    "http://192.168.43.37:9001/pic_lib/destination/destList", {}
+                    "http://127.0.0.1:9000/pic_lib/destination/destList", {}
                 )
                 .then(res => {
                     console.log(res.data)
                     if (res.data.code == 200) {
                         this.automobiledestinationIds = res.data.data
                         this.destinationId = res.data.data[0].id
+                    }
+                })
+                .catch(error => {
+                    that.$message({
+                        message: "网络错误,请稍后再试",
+                        type: "error"
+                    });
+                });
+        },
+        getDataList () {
+            let that = this;
+            axios
+                .get(
+                    "http://127.0.0.1:9000/pic_lib/user/statistical", {}
+                )
+                .then(res => {
+                    console.log(res.data)
+                    if (res.data.code == 200) {
+                        let result = res.data.data
+                        this.pieOption1.series[0].data = result.resultMapList1
+                        this.pieOption2.series[0].data = result.resultMapList2
+                        this.pieOption3.series[0].data = result.resultMapList3
+                        this.pieOption4.series[0].data = result.resultMapList4
+                        this.$nextTick(() => {
+                            this.drawPieChart1()
+                            this.drawPieChart2()
+                            this.drawPieChart3()
+                            this.drawPieChart4()
+                        })
                     }
                 })
                 .catch(error => {

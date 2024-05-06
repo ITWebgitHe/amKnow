@@ -71,7 +71,7 @@ export default {
                 username: '',
                 password: ''
             },
-            action: 'http://192.168.43.37:9001/pic_lib/user/importUserInfo',
+            action: 'http://127.0.0.1:9000/pic_lib/user/importUserInfo',
             formRules: {
                 username: [
                     { required: true, message: "请输入用户名", trigger: "blur" }
@@ -85,7 +85,7 @@ export default {
             let that = this;
             axios
                 .get(
-                    "http://192.168.43.37:9001/pic_lib/user/pageList", {
+                    "http://127.0.0.1:9000/pic_lib/user/pageList", {
                     params: {
 
                         pageNum: this.pageNum,
@@ -109,7 +109,7 @@ export default {
         onDeleteUser () {
             axios
                 .get(
-                    "http://192.168.43.37:9001/pic_lib/user/delete", {
+                    "http://127.0.0.1:9000/pic_lib/user/delete", {
                     params: {
 
                     }
@@ -145,7 +145,7 @@ export default {
                     }
                     axios
                         .post(
-                            "http://192.168.43.37:9001/pic_lib/user/insert",
+                            "http://127.0.0.1:9000/pic_lib/user/insert",
                             params
 
                         )
